@@ -4,44 +4,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sinhala Agentic Fake News Detection - Thesis Overview</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <meta name="description"
+        content="Sinhala Agentic Fake News Detection - A Multi-Agent System with RAG for Low-Resource Language Verification">
+    <title>Sinhala Fake News Detection | Molindu Achintha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Project-specific styles */
+        .project-wrapper {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 0;
+            min-height: calc(100vh - var(--nav-height));
+            padding-top: var(--nav-height);
+        }
+
+        .project-sidebar {
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            top: var(--nav-height);
+            height: calc(100vh - var(--nav-height));
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .project-sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-sidebar-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-nav {
+            list-style: none;
+        }
+
+        .project-nav li {
+            margin-bottom: 0.25rem;
+        }
+
+        .project-nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .project-nav a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+        }
+
+        .project-main {
+            padding: 3rem 4rem;
+            max-width: 900px;
+        }
+
+        .project-hero {
+            margin-bottom: 3rem;
+        }
+
+        .project-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .callout {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            border: 1px solid var(--accent-primary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .callout h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .callout p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+            display: inline-block;
+        }
+
+        .project-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding-left: 1.25rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-section ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        .diagram-container {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: var(--radius-sm);
+        }
+
+        .diagram-container .caption {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+
+        @media (max-width: 900px) {
+            .project-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .project-sidebar {
+                position: relative;
+                top: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .project-main {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div class="page-wrapper">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-title">Fake News Detection</div>
-                <div style="font-size: 0.9em; color: #777;">Sinhala Agentic System</div>
-            </div>
-            <ul class="sidebar-nav">
+    <!-- Global Navigation -->
+    <nav class="global-nav">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">Molindu Achintha</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/projects.html">Projects</a></li>
+                <li><a href="/experience.html">Experience</a></li>
+                <li><a href="/certifications.html">Certifications</a></li>
+                <li><a href="mailto:molindu.21@cse.mrt.ac.lk" class="nav-contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="project-wrapper">
+        <!-- Project Sidebar -->
+        <aside class="project-sidebar">
+            <div class="project-sidebar-title">Fake News Detection</div>
+            <div class="project-sidebar-subtitle">Sinhala Agentic System</div>
+
+            <ul class="project-nav">
                 <li><a href="#abstract">Abstract</a></li>
 
-                <span class="nav-section">Part 1: The Context</span>
+                <div class="nav-section-label">Part 1: The Context</div>
                 <li><a href="#introduction">Introduction</a></li>
                 <li><a href="#problem-statement">The Problem</a></li>
                 <li><a href="#challenges">Linguistic Challenges</a></li>
 
-                <span class="nav-section">Part 2: The Solution</span>
+                <div class="nav-section-label">Part 2: The Solution</div>
                 <li><a href="#architecture">System Architecture</a></li>
                 <li><a href="#agents">The 5 Agents</a></li>
-                <li><a href="#rag">Retrieval Augmented Generation</a></li>
+                <li><a href="#rag">RAG Implementation</a></li>
 
-                <span class="nav-section">Part 3: Implementation</span>
+                <div class="nav-section-label">Part 3: Implementation</div>
                 <li><a href="#tech-stack">Technology Stack</a></li>
                 <li><a href="#future">Future Work</a></li>
             </ul>
-        </nav>
+        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header>
+        <!-- Project Main Content -->
+        <main class="project-main">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <a href="/projects.html">Projects</a>
+                <span>/</span>
+                <span>Sinhala Fake News Detection</span>
+            </div>
+
+            <div class="project-hero">
                 <h1>Sinhala Agentic Fake News Detection</h1>
-                <p style="font-size: 1.3rem; color: #555;">A Multi-Agent System with Retrieval-Augmented Generation for
-                    Low-Resource Language Verification</p>
-            </header>
+                <p class="subtitle">A Multi-Agent System with Retrieval-Augmented Generation for Low-Resource Language
+                    Verification</p>
+            </div>
 
             <section id="abstract">
                 <div class="callout">
@@ -56,7 +289,7 @@
                 </div>
             </section>
 
-            <section id="introduction">
+            <section id="introduction" class="project-section">
                 <h2>Introduction</h2>
                 <p>The rise of social media has democratized information sharing but also facilitated the rapid spread
                     of misinformation. In Sri Lanka, false information has previously contributed to serious social
@@ -68,19 +301,19 @@
                     building a robust system specifically designed for the Sinhala language ecosystem.</p>
             </section>
 
-            <section id="problem-statement">
+            <section id="problem-statement" class="project-section">
                 <h2>Problem Statement</h2>
                 <p>How can we build a fake news detection system for Sinhala that can accurately identify false claims,
                     provide evidence for its decisions, and explain its reasoning?</p>
                 <p>The core challenges are:</p>
                 <ul>
-                    <li>Lack of language-specific pre-trained models.</li>
-                    <li>Scarcity of large-scale labeled training data.</li>
-                    <li>The need for explainability to build user trust.</li>
+                    <li>Lack of language-specific pre-trained models</li>
+                    <li>Scarcity of large-scale labeled training data</li>
+                    <li>The need for explainability to build user trust</li>
                 </ul>
             </section>
 
-            <section id="challenges">
+            <section id="challenges" class="project-section">
                 <h2>Linguistic Challenges</h2>
                 <p>Sinhala poses unique difficulties for Natural Language Processing that standard models often
                     overlook.</p>
@@ -98,7 +331,7 @@
                     requires sophisticated normalization techniques.</p>
             </section>
 
-            <section id="architecture">
+            <section id="architecture" class="project-section">
                 <h2>System Architecture</h2>
                 <p>To address these challenges, we moved away from a single "black box" classifier and adopted a
                     <strong>Multi-Agent System</strong>. This allows us to decompose the complex task of verification
@@ -106,12 +339,11 @@
 
                 <div class="diagram-container">
                     <img src="assets/architecture_diagram.png" alt="Architecture Diagram showing the 5-agent pipeline">
-                    <p style="text-align: center; font-size: 0.9rem; color: #777; margin-top: 0.5rem;">Figure 1: The
-                        Multi-Agent Pipeline</p>
+                    <p class="caption">Figure 1: The Multi-Agent Pipeline</p>
                 </div>
             </section>
 
-            <section id="agents">
+            <section id="agents" class="project-section">
                 <h2>The 5 Agents</h2>
                 <p>The system comprises five specialized agents, each responsible for a distinct stage of the
                     verification pipeline.</p>
@@ -133,19 +365,19 @@
                     external knowledge base. It searches the <strong>Pinecone Vector Database</strong>, which contains
                     two namespaces:</p>
                 <ul>
-                    <li><strong>Dataset:</strong> Historical, labeled claims for ground truth.</li>
+                    <li><strong>Dataset:</strong> Historical, labeled claims for ground truth</li>
                     <li><strong>Live News:</strong> Real-time scraped articles from trusted sources like Hiru and Ada
-                        Derana.</li>
+                        Derana</li>
                 </ul>
 
                 <h3>4. Reasoning Agent</h3>
                 <p>This agent analyzes the retrieved evidence. It implements a "Map/No-Map" logic:</p>
                 <ul>
-                    <li><strong>High Match (>0.7):</strong> If evidence is very similar to a known true/false claim, it
-                        adopts that label.</li>
+                    <li><strong>High Match (&gt;0.7):</strong> If evidence is very similar to a known true/false claim,
+                        it adopts that label</li>
                     <li><strong>Medium Match:</strong> It analyzes the credibility of the source (e.g., boosting
-                        mainstream news outlets).</li>
-                    <li><strong>Low Match:</strong> It flags the claim as "Needs More Evidence".</li>
+                        mainstream news outlets)</li>
+                    <li><strong>Low Match:</strong> It flags the claim as "Needs More Evidence"</li>
                 </ul>
 
                 <h3>5. Verdict Agent</h3>
@@ -154,7 +386,7 @@
                     saying "Fake", it says "This is likely false because [Source X] reported [Opposite Fact]."</p>
             </section>
 
-            <section id="rag">
+            <section id="rag" class="project-section">
                 <h2>Retrieval-Augmented Generation (RAG)</h2>
                 <div class="callout">
                     <h4>Why RAG?</h4>
@@ -168,37 +400,44 @@
                     re-training.</p>
             </section>
 
-            <section id="tech-stack">
+            <section id="tech-stack" class="project-section">
                 <h2>Technology Stack</h2>
                 <p>The system was built with a focus on modularity and scalability.</p>
                 <ul>
-                    <li><strong>Backend:</strong> Python 3.10 with FastAPI (for high-performance async processing).</li>
-                    <li><strong>Vector Store:</strong> Pinecone (Serverless vector database for low-latency retrieval).
+                    <li><strong>Backend:</strong> Python 3.10 with FastAPI (for high-performance async processing)</li>
+                    <li><strong>Vector Store:</strong> Pinecone (Serverless vector database for low-latency retrieval)
                     </li>
-                    <li><strong>AI Models:</strong> OpenRouter API (Accessing state-of-the-art multilingual embeddings).
+                    <li><strong>AI Models:</strong> OpenRouter API (Accessing state-of-the-art multilingual embeddings)
                     </li>
-                    <li><strong>Deployment:</strong> Docker (Containerization for consistent environments).</li>
+                    <li><strong>Deployment:</strong> Docker (Containerization for consistent environments)</li>
                 </ul>
             </section>
 
-            <section id="future">
+            <section id="future" class="project-section">
                 <h2>Future Work</h2>
                 <p>While the current system achieves 72% accuracy, there are several avenues for improvement:</p>
                 <ul>
                     <li><strong>Corpus Expansion:</strong> Automatically scraping more Sinhala news sites to reduce
-                        "Needs More Evidence" verdicts.</li>
+                        "Needs More Evidence" verdicts</li>
                     <li><strong>Fine-tuning:</strong> Training a smaller, domain-specific language model on Sinhala news
-                        data to improve embedding quality.</li>
+                        data to improve embedding quality</li>
                     <li><strong>Multimedia:</strong> Extending the system to analyze images and video captions, which
-                        are primary vectors for misinformation on platforms like WhatsApp.</li>
+                        are primary vectors for misinformation on platforms like WhatsApp</li>
                 </ul>
             </section>
-
-            <div class="footer">
-                <p>&copy; 2024 Molindu Achintha. Based on Thesis "Sinhala Agentic Fake News Detection".</p>
-            </div>
         </main>
     </div>
+
+    <footer class="footer">
+        <p>© 2024 Molindu Achintha. Based on Thesis "Sinhala Agentic Fake News Detection".</p>
+    </footer>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
 </body>
 
 </html>

@@ -14,6 +14,25 @@
 </head>
 
 <body>
+    <!-- Global Navigation -->
+    <nav class="global-nav">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">Molindu Achintha</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/projects.html">Projects</a></li>
+                <li><a href="/experience.html">Experience</a></li>
+                <li><a href="/certifications.html">Certifications</a></li>
+                <li><a href="mailto:molindu.21@cse.mrt.ac.lk" class="nav-contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
     <div class="page-wrapper">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -149,9 +168,12 @@
                 </div>
             </section>
 
-            <!-- Experience Section -->
+            <!-- Experience Section - Preview -->
             <section class="section" id="experience">
-                <h2 class="section-title">Experience</h2>
+                <div class="section-header">
+                    <h2 class="section-title">Experience</h2>
+                    <a href="/experience.html" class="view-all-link">View All →</a>
+                </div>
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-marker"></div>
@@ -164,6 +186,13 @@
                             <p>Leading ML and R&D projects including an agentic-AI-powered CMS and developing Continuity
                                 Checker - a computer vision system for detecting continuity mismatches in film
                                 production.</p>
+                            <div class="tech-used">
+                                <span>Python</span>
+                                <span>Agentic AI</span>
+                                <span>Computer Vision</span>
+                                <span>LLMs</span>
+                                <span>RAG</span>
+                            </div>
                         </div>
                     </div>
                     <div class="timeline-item">
@@ -176,30 +205,13 @@
                             <span class="duration">Sep 2025 - Present · Remote</span>
                             <p>Leading the AI team at a startup to build next-generation agentic-AI learning platform
                                 with personalized, RAG-powered tools for students and teachers.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-header">
-                                <h3>ML and R&D Engineering Intern</h3>
-                                <span class="company">Braingaze</span>
+                            <div class="tech-used">
+                                <span>Python</span>
+                                <span>Agentic AI</span>
+                                <span>RAG</span>
+                                <span>LLMs</span>
+                                <span>EdTech</span>
                             </div>
-                            <span class="duration">Dec 2024 - May 2025 · Remote</span>
-                            <p>Adapted and enhanced eye-tracking analysis tools to extract vergence and pupil signals
-                                from video and ARKit data, improving gaze-point estimation accuracy.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-header">
-                                <h3>Game Developer - Part Time</h3>
-                                <span class="company">Braingaze</span>
-                            </div>
-                            <span class="duration">Mar 2024 - Dec 2025 · Remote</span>
-                            <p>Developed two gaze-controlled therapeutic games for the BrainGaze Focus platform to
-                                support ADHD and ASD therapy.</p>
                         </div>
                     </div>
                 </div>
@@ -215,15 +227,28 @@
                     </div>
                     <span class="edu-duration">2022 – 2026 (Expected) · Moratuwa, Sri Lanka</span>
                     <p>Undergraduate program focusing on Artificial Intelligence, Machine Learning, and Software
-                        Engineering.</p>
+                        Engineering. Gaining practical experience in AI, data analytics, and computational problem
+                        solving.</p>
+                    <div class="course-tags">
+                        <span>Machine Learning</span>
+                        <span>Data Structures</span>
+                        <span>Algorithms</span>
+                        <span>Database Systems</span>
+                        <span>Linear Algebra</span>
+                        <span>Optimization</span>
+                    </div>
                 </div>
             </section>
 
-            <!-- Projects Section -->
+            <!-- Projects Section - Preview -->
             <section class="section" id="projects">
-                <h2 class="section-title">Featured Projects</h2>
+                <div class="section-header">
+                    <h2 class="section-title">Featured Projects</h2>
+                    <a href="/projects.html" class="view-all-link">View All →</a>
+                </div>
                 <div class="projects-grid">
-                    <a href="projects/sinhala-fake-news/" class="project-card">
+                    <a href="/projects/sinhala-fake-news/" class="project-card featured">
+                        <div class="project-badge">Featured</div>
                         <h3>Multimodal Sinhala Fact-Checking RAG System</h3>
                         <p>Multi-agent RAG system for Sinhala misinformation detection with claim extraction, linguistic
                             processing, evidence retrieval, and verdict generation.</p>
@@ -254,22 +279,15 @@
                             <span>Mobile Dev</span>
                         </div>
                     </div>
-                    <div class="project-card">
-                        <h3>Diabetic Retinopathy Detection</h3>
-                        <p>ML classifier using combined InceptionNet and ResNet outputs with SMOTE for class imbalance
-                            handling.</p>
-                        <div class="project-tags">
-                            <span>TensorFlow</span>
-                            <span>Keras</span>
-                            <span>SMOTE</span>
-                        </div>
-                    </div>
                 </div>
             </section>
 
-            <!-- Certifications Section -->
+            <!-- Certifications Preview -->
             <section class="section" id="certifications">
-                <h2 class="section-title">Certifications</h2>
+                <div class="section-header">
+                    <h2 class="section-title">Certifications</h2>
+                    <a href="/certifications.html" class="view-all-link">View All 10 →</a>
+                </div>
                 <div class="certifications-grid">
                     <a href="https://www.udemy.com/certificate/UC-2e866a4d-2b92-4ad3-91ec-949d5c5dcec2/" target="_blank"
                         class="cert-card">
@@ -279,21 +297,6 @@
                     <a href="https://www.coursera.org/account/accomplishments/verify/H4MUPCYVQJ88" target="_blank"
                         class="cert-card">
                         <span class="cert-name">Supervised Machine Learning: Regression and Classification</span>
-                        <span class="cert-issuer">Coursera · 2024</span>
-                    </a>
-                    <a href="https://www.coursera.org/account/accomplishments/verify/9KP7NUVGQ2WP" target="_blank"
-                        class="cert-card">
-                        <span class="cert-name">Advanced Learning Algorithms</span>
-                        <span class="cert-issuer">Coursera · 2024</span>
-                    </a>
-                    <a href="https://www.coursera.org/account/accomplishments/verify/KANSAXGGW8VH" target="_blank"
-                        class="cert-card">
-                        <span class="cert-name">NLP with Classification and Vector Spaces</span>
-                        <span class="cert-issuer">Coursera · 2024</span>
-                    </a>
-                    <a href="https://www.coursera.org/account/accomplishments/verify/SNSAN9RF7HWQ" target="_blank"
-                        class="cert-card">
-                        <span class="cert-name">Introduction to TensorFlow for AI, ML, and Deep Learning</span>
                         <span class="cert-issuer">Coursera · 2024</span>
                     </a>
                     <a href="https://www.coursera.org/account/accomplishments/verify/TN87ZCRDWHYK" target="_blank"
@@ -325,6 +328,14 @@
     <footer class="footer">
         <p>© 2024 Molindu Achintha. Built with passion.</p>
     </footer>
+
+    <script>
+        // Mobile nav toggle
+        document.querySelector('.nav-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
 </body>
 
 </html>
