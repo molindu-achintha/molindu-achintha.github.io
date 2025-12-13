@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinhala Agentic Fake News Detection - Thesis Overview</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Fake News Detection</div>
+                <div style="font-size: 0.9em; color: #777;">Sinhala Agentic System</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="#abstract">Abstract</a></li>
+
+                <span class="nav-section">Part 1: The Context</span>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#problem-statement">The Problem</a></li>
+                <li><a href="#challenges">Linguistic Challenges</a></li>
+
+                <span class="nav-section">Part 2: The Solution</span>
+                <li><a href="#architecture">System Architecture</a></li>
+                <li><a href="#agents">The 5 Agents</a></li>
+                <li><a href="#rag">Retrieval Augmented Generation</a></li>
+
+                <span class="nav-section">Part 3: Implementation</span>
+                <li><a href="#tech-stack">Technology Stack</a></li>
+                <li><a href="#future">Future Work</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>Sinhala Agentic Fake News Detection</h1>
+                <p style="font-size: 1.3rem; color: #555;">A Multi-Agent System with Retrieval-Augmented Generation for
+                    Low-Resource Language Verification</p>
+            </header>
+
+            <section id="abstract">
+                <div class="callout">
+                    <h4>Abstract</h4>
+                    <p>The spread of fake news is a critical issue, particularly for low-resource languages like
+                        Sinhala, spoken by over 16 million people in Sri Lanka. This project presents a novel fake news
+                        detection system that utilizes a <strong>Multi-Agent Architecture</strong> combined with
+                        <strong>Retrieval-Augmented Generation (RAG)</strong> to analyze and verify claims. By
+                        leveraging five specialized agents—Claim Extractor, Language Processing, Retrieval, Reasoning,
+                        and Verdict—the system is able to not only detect misinformation but provide human-readable
+                        explanations in Sinhala grounded in retrieved evidence.</p>
+                </div>
+            </section>
+
+            <section id="introduction">
+                <h2>Introduction</h2>
+                <p>The rise of social media has democratized information sharing but also facilitated the rapid spread
+                    of misinformation. In Sri Lanka, false information has previously contributed to serious social
+                    consequences, including violence and unrest. Combating this is difficult because Sinhala is a
+                    <strong>low-resource language</strong>, meaning it lacks the vast labeled datasets and mature NLP
+                    tools available for English.</p>
+                <p>Most existing systems are English-centric. They fail to handle the unique linguistic properties of
+                    Sinhala or the specific cultural context of Sri Lankan news. This project aims to bridge that gap by
+                    building a robust system specifically designed for the Sinhala language ecosystem.</p>
+            </section>
+
+            <section id="problem-statement">
+                <h2>Problem Statement</h2>
+                <p>How can we build a fake news detection system for Sinhala that can accurately identify false claims,
+                    provide evidence for its decisions, and explain its reasoning?</p>
+                <p>The core challenges are:</p>
+                <ul>
+                    <li>Lack of language-specific pre-trained models.</li>
+                    <li>Scarcity of large-scale labeled training data.</li>
+                    <li>The need for explainability to build user trust.</li>
+                </ul>
+            </section>
+
+            <section id="challenges">
+                <h2>Linguistic Challenges</h2>
+                <p>Sinhala poses unique difficulties for Natural Language Processing that standard models often
+                    overlook.</p>
+
+                <h3>Diglossia</h3>
+                <p>Sinhala exhibits strict diglossia, meaning the written language (Literature Sinhala) differs
+                    significantly from the spoken language (Spoken Sinhala). News articles use the formal written style,
+                    while social media users (where fake news spreads) use colloquial spoken forms. A model trained only
+                    on formal news data will struggle to understand the nuances of a viral Facebook post.</p>
+
+                <h3>Morphological Richness</h3>
+                <p>Sinhala is an agglutinative language. Words utilize a complex system of suffixes to indicate
+                    grammatical relations. A single root word can have dozens of variations (inflections for case,
+                    number, tense, etc.). This leads to a high out-of-vocabulary rate for standard tokenizers and
+                    requires sophisticated normalization techniques.</p>
+            </section>
+
+            <section id="architecture">
+                <h2>System Architecture</h2>
+                <p>To address these challenges, we moved away from a single "black box" classifier and adopted a
+                    <strong>Multi-Agent System</strong>. This allows us to decompose the complex task of verification
+                    into manageable sub-tasks.</p>
+
+                <div class="diagram-container">
+                    <img src="assets/architecture_diagram.png" alt="Architecture Diagram showing the 5-agent pipeline">
+                    <p style="text-align: center; font-size: 0.9rem; color: #777; margin-top: 0.5rem;">Figure 1: The
+                        Multi-Agent Pipeline</p>
+                </div>
+            </section>
+
+            <section id="agents">
+                <h2>The 5 Agents</h2>
+                <p>The system comprises five specialized agents, each responsible for a distinct stage of the
+                    verification pipeline.</p>
+
+                <h3>1. Claim Extractor Agent</h3>
+                <p>The first step is to identify what needs verification. This agent uses heuristic rules adapted for
+                    Sinhala punctuation to segment text. It filters for sentences that contain "fact-like"
+                    properties—dates, numbers, named entities—to distinguish verifiable claims from opinions or
+                    questions.</p>
+
+                <h3>2. Language Processing Agent</h3>
+                <p>This agent acts as the bridge between raw text and the vector space. It handles text normalization
+                    (handling Unicode inconsistencies common in Sinhala typing) and generates high-dimensional
+                    embeddings (1536 dimensions) using the OpenRouter API. This allows us to capture semantic meaning
+                    despite morphological variations.</p>
+
+                <h3>3. Retrieval Agent</h3>
+                <p>Instead of relying on the model's internal memory (which hallucinates), this agent queries an
+                    external knowledge base. It searches the <strong>Pinecone Vector Database</strong>, which contains
+                    two namespaces:</p>
+                <ul>
+                    <li><strong>Dataset:</strong> Historical, labeled claims for ground truth.</li>
+                    <li><strong>Live News:</strong> Real-time scraped articles from trusted sources like Hiru and Ada
+                        Derana.</li>
+                </ul>
+
+                <h3>4. Reasoning Agent</h3>
+                <p>This agent analyzes the retrieved evidence. It implements a "Map/No-Map" logic:</p>
+                <ul>
+                    <li><strong>High Match (>0.7):</strong> If evidence is very similar to a known true/false claim, it
+                        adopts that label.</li>
+                    <li><strong>Medium Match:</strong> It analyzes the credibility of the source (e.g., boosting
+                        mainstream news outlets).</li>
+                    <li><strong>Low Match:</strong> It flags the claim as "Needs More Evidence".</li>
+                </ul>
+
+                <h3>5. Verdict Agent</h3>
+                <p>The final agent synthesizes the findings into a user-facing response. Crucially, it uses
+                    template-based generation to construct a <strong>Sinhala explanation</strong>. Instead of just
+                    saying "Fake", it says "This is likely false because [Source X] reported [Opposite Fact]."</p>
+            </section>
+
+            <section id="rag">
+                <h2>Retrieval-Augmented Generation (RAG)</h2>
+                <div class="callout">
+                    <h4>Why RAG?</h4>
+                    <p>In low-resource settings, Large Language Models often hallucinate because they haven't seen
+                        enough data in that language. RAG solves this by forcing the model to look at trusted documents
+                        before speaking.</p>
+                </div>
+                <p>By indexing thousands of news articles into a vector database, our system ensures that every verdict
+                    is grounded in a specific, retrievable document. If a new fake story emerges today, we simply add
+                    the correcting news article to the database, and the system can detect the fake immediately without
+                    re-training.</p>
+            </section>
+
+            <section id="tech-stack">
+                <h2>Technology Stack</h2>
+                <p>The system was built with a focus on modularity and scalability.</p>
+                <ul>
+                    <li><strong>Backend:</strong> Python 3.10 with FastAPI (for high-performance async processing).</li>
+                    <li><strong>Vector Store:</strong> Pinecone (Serverless vector database for low-latency retrieval).
+                    </li>
+                    <li><strong>AI Models:</strong> OpenRouter API (Accessing state-of-the-art multilingual embeddings).
+                    </li>
+                    <li><strong>Deployment:</strong> Docker (Containerization for consistent environments).</li>
+                </ul>
+            </section>
+
+            <section id="future">
+                <h2>Future Work</h2>
+                <p>While the current system achieves 72% accuracy, there are several avenues for improvement:</p>
+                <ul>
+                    <li><strong>Corpus Expansion:</strong> Automatically scraping more Sinhala news sites to reduce
+                        "Needs More Evidence" verdicts.</li>
+                    <li><strong>Fine-tuning:</strong> Training a smaller, domain-specific language model on Sinhala news
+                        data to improve embedding quality.</li>
+                    <li><strong>Multimedia:</strong> Extending the system to analyze images and video captions, which
+                        are primary vectors for misinformation on platforms like WhatsApp.</li>
+                </ul>
+            </section>
+
+            <div class="footer">
+                <p>&copy; 2024 Molindu Achintha. Based on Thesis "Sinhala Agentic Fake News Detection".</p>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
