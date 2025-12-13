@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Light-Weight 3D GAN Generator for MRI Super-Resolution - A novel framework using Wasserstein GANs and perceptual loss for enhancing medical imaging">
+    <title>3D MRI Super-Resolution | Molindu Achintha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Project-specific styles */
+        .project-wrapper {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 0;
+            min-height: calc(100vh - var(--nav-height));
+            padding-top: var(--nav-height);
+        }
+
+        .project-sidebar {
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            top: var(--nav-height);
+            height: calc(100vh - var(--nav-height));
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .project-sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-sidebar-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-nav {
+            list-style: none;
+        }
+
+        .project-nav li {
+            margin-bottom: 0.25rem;
+        }
+
+        .project-nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .project-nav a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+        }
+
+        .project-main {
+            padding: 3rem 4rem;
+            max-width: 900px;
+        }
+
+        .project-hero {
+            margin-bottom: 3rem;
+        }
+
+        .project-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .callout {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            border: 1px solid var(--accent-primary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .callout h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .callout p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .callout.highlight {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(56, 189, 248, 0.1) 100%);
+            border-color: #22c55e;
+        }
+
+        .callout.highlight h4 {
+            color: #22c55e;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+            display: inline-block;
+        }
+
+        .project-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding-left: 1.25rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-section ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .info-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card p {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card .pros {
+            color: #22c55e;
+        }
+
+        .info-card .cons {
+            color: #ef4444;
+        }
+
+        .diagram-container {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .diagram-placeholder {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: var(--radius-sm);
+        }
+
+        .diagram-container .caption {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .dataset-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .dataset-card h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .dataset-card p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .tech-item {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+
+        .tech-item:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .timeline-horizontal {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 2rem 0;
+            padding: 0 1rem;
+        }
+
+        .timeline-horizontal::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+        }
+
+        .timeline-phase {
+            text-align: center;
+            position: relative;
+            flex: 1;
+        }
+
+        .timeline-phase::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-phase h5 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-phase p {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 900px) {
+            .project-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .project-sidebar {
+                position: relative;
+                top: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .project-main {
+                padding: 2rem 1.5rem;
+            }
+
+            .two-column,
+            .three-column {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-horizontal {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .timeline-horizontal::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Global Navigation -->
+    <nav class="global-nav"
+        style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background-color: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(148, 163, 184, 0.1); z-index: 1000;">
+        <div class="nav-container"
+            style="max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;">
+            <a href="/" class="nav-logo"
+                style="font-size: 1.125rem; font-weight: 700; background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Molindu
+                Achintha</a>
+            <ul class="nav-links"
+                style="display: flex; align-items: center; gap: 0.5rem; list-style: none; margin: 0; padding: 0;">
+                <li><a href="/"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Home</a>
+                </li>
+                <li><a href="/projects.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Projects</a>
+                </li>
+                <li><a href="/experience.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Experience</a>
+                </li>
+                <li><a href="/certifications.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Certifications</a>
+                </li>
+                <li><a href="mailto:molindu.21@cse.mrt.ac.lk" class="nav-contact"
+                        style="padding: 0.5rem 1rem; background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); color: #0f172a !important; font-size: 0.875rem; font-weight: 600; border-radius: 0.375rem; text-decoration: none;">Contact</a>
+                </li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation" style="display: none;">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="project-wrapper">
+        <!-- Project Sidebar -->
+        <aside class="project-sidebar">
+            <div class="project-sidebar-title">3D MRI Super-Resolution</div>
+            <div class="project-sidebar-subtitle">Light-Weight GAN Framework</div>
+
+            <ul class="project-nav">
+                <li><a href="#abstract">Abstract</a></li>
+
+                <div class="nav-section-label">Part 1: Background</div>
+                <li><a href="#what-is-mri">What is MRI?</a></li>
+                <li><a href="#clinical-need">Clinical Need</a></li>
+                <li><a href="#mri-parameters">MRI Parameters</a></li>
+                <li><a href="#challenge">The Challenge</a></li>
+
+                <div class="nav-section-label">Part 2: Solution</div>
+                <li><a href="#proposed-solution">Our Solution</a></li>
+                <li><a href="#clinical-impact">Clinical Impact</a></li>
+                <li><a href="#research-gap">Research Gap</a></li>
+
+                <div class="nav-section-label">Part 3: Technical</div>
+                <li><a href="#objectives">Objectives</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#perceptual-loss">Perceptual Loss</a></li>
+                <li><a href="#datasets">Datasets</a></li>
+                <li><a href="#pipeline">Pipeline</a></li>
+                <li><a href="#evaluation">Evaluation</a></li>
+            </ul>
+        </aside>
+
+        <!-- Project Main Content -->
+        <main class="project-main">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <a href="/projects.html">Projects</a>
+                <span>/</span>
+                <span>3D MRI Super-Resolution</span>
+            </div>
+
+            <div class="project-hero">
+                <h1>Light-Weight 3D Generator for MRI Super-Resolution</h1>
+                <p class="subtitle">A novel Wasserstein GAN framework with systematic comparison of perceptual loss
+                    paradigms for enhancing low-resolution medical brain scans</p>
+            </div>
+
+            <section id="abstract">
+                <div class="callout">
+                    <h4>Research Abstract</h4>
+                    <p>High-resolution 3D MRI is crucial for precise diagnosis of neurodegenerative diseases and
+                        surgical planning. However, acquiring high-resolution scans requires long scan times, causing
+                        patient discomfort and motion artifacts. This project develops a <strong>lightweight 3D
+                            Wasserstein GAN (WGAN-GP)</strong> framework to computationally enhance low-resolution MRI
+                        scans. We conduct a <strong>novel systematic comparison</strong> of perceptual loss paradigms
+                        using features from a medical segmentation transformer (Swin UNETR) versus a generalist
+                        foundation model (DINOv3) to determine the optimal "perceptual teacher" for 3D medical image
+                        synthesis.</p>
+                </div>
+            </section>
+
+            <section id="what-is-mri" class="project-section">
+                <h2>What is MRI?</h2>
+                <p><strong>Magnetic Resonance Imaging (MRI)</strong> is an advanced medical imaging technique that uses
+                    a powerful magnetic field and radio waves to generate detailed images of organs and tissues within
+                    the body.</p>
+
+                <h3>Key Advantages of MRI</h3>
+                <ul>
+                    <li><strong>Excellent Soft Tissue Contrast:</strong> Unparalleled ability to visualize soft tissues
+                        like the brain, muscles, and organs</li>
+                    <li><strong>No Ionizing Radiation:</strong> Unlike CT scans or X-rays, MRI is non-invasive and
+                        considered very safe</li>
+                    <li><strong>3D Volumetric Data:</strong> Produces a series of cross-sectional images ("slices") that
+                        can be viewed and analyzed in 3D</li>
+                </ul>
+            </section>
+
+            <section id="clinical-need" class="project-section">
+                <h2>The Clinical Need for High-Resolution MRI</h2>
+                <p>High-Resolution 3D MRI is a non-invasive, indispensable tool in modern neurology, crucial for:</p>
+                <ul>
+                    <li>Precise delineation of fine anatomical structures (e.g., hippocampus)</li>
+                    <li>Accurate diagnosis and study of neurodegenerative diseases</li>
+                    <li>Pre-surgical planning and monitoring for brain tumors</li>
+                </ul>
+
+                <div class="callout highlight">
+                    <h4>Clinical Insight</h4>
+                    <p>Higher image detail directly improves diagnostic confidence and patient outcomes. The ability to
+                        visualize fine anatomical structures can be the difference between early detection and missed
+                        diagnosis.</p>
+                </div>
+
+                <h3>The "Loaf of Bread" Analogy</h3>
+                <p>Imagine the brain is a loaf of bread. A 3D MRI scan doesn't capture the whole loaf at once. Instead,
+                    it takes a series of individual 2D pictures, or "slices," through the brain. Each slice has a
+                    specific thickness. When we stack all these 2D slices together in the correct order, we reconstruct
+                    the full 3D brain volume.</p>
+            </section>
+
+            <section id="mri-parameters" class="project-section">
+                <h2>Key MRI Parameters</h2>
+                <p>The quality of the final 3D image depends heavily on two critical parameters:</p>
+
+                <div class="two-column">
+                    <div class="info-card">
+                        <h4>Thick Slices (e.g., 5mm)</h4>
+                        <p class="pros">✓ Faster scan time</p>
+                        <p class="pros">✓ Better signal-to-noise ratio</p>
+                        <p class="cons">✗ Blurs fine details</p>
+                        <p class="cons">✗ Partial Volume Effect - multiple structures averaged into single pixel</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Thin Slices (e.g., 1mm)</h4>
+                        <p class="pros">✓ Excellent anatomical detail</p>
+                        <p class="pros">✓ Clear boundaries between tissues</p>
+                        <p class="cons">✗ Slower scan time</p>
+                        <p class="cons">✗ More susceptible to image noise</p>
+                    </div>
+                </div>
+
+                <p><strong>Inter-Slice Gap:</strong> To speed up scans, sometimes slices are acquired with gaps in
+                    between. This means no information is captured in those gaps, leading to a loss of critical
+                    anatomical data.</p>
+            </section>
+
+            <section id="challenge" class="project-section">
+                <h2>The Technical Challenge</h2>
+                <p>There's a fundamental trade-off in MRI acquisition:</p>
+                <ul>
+                    <li><strong>High Resolution (Thin Slices)</strong> → Long Scan Time → Low Signal-to-Noise Ratio</li>
+                    <li><strong>The Clinical Compromise:</strong> Anisotropic scans (thick slices or large gaps) are
+                        faster but sacrifice critical detail, leading to image artifacts</li>
+                </ul>
+            </section>
+
+            <section id="proposed-solution" class="project-section">
+                <h2>Our Proposed Solution</h2>
+                <p>We propose <strong>Single Image Super-Resolution (SISR)</strong> - a computational approach to
+                    generate high-quality, isotropic 3D volumes from faster, clinically practical, anisotropic scans.
+                </p>
+
+                <div class="callout">
+                    <h4>Breaking the Compromise</h4>
+                    <p>Our solution breaks the fundamental trade-off between scan time and image quality. Patients can
+                        undergo faster, more comfortable scans while clinicians receive high-resolution images for
+                        accurate diagnosis.</p>
+                </div>
+            </section>
+
+            <section id="clinical-impact" class="project-section">
+                <h2>Clinical Impact & Advantages</h2>
+
+                <div class="three-column">
+                    <div class="info-card">
+                        <h4>🏥 Patient Experience</h4>
+                        <p>Reduces scan time from 15-90 minutes. Crucial for children, elderly, and claustrophobic
+                            patients. Minimizes motion artifacts.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🔬 Diagnostic Power</h4>
+                        <p>Generates high-resolution 3D images from faster scans. Superior visualization for improved
+                            accuracy in diagnosis and surgical planning.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>💰 Healthcare Efficiency</h4>
+                        <p>Reduces repeat scans. More efficient use of expensive MRI machines. Reduces patient waiting
+                            lists.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="research-gap" class="project-section">
+                <h2>The Research Gap</h2>
+                <p>Modern GAN-based methods show promise but suffer from a critical limitation: <strong>Poor Perceptual
+                        Guidance</strong>.</p>
+                <ul>
+                    <li>Most methods use the outdated VGG network for perceptual loss</li>
+                    <li><strong>2D Only:</strong> VGG fails to capture volumetric context essential for 3D anatomy</li>
+                    <li><strong>Trained on Natural Images:</strong> Features optimized for cats and dogs, not brain
+                        tissue textures</li>
+                </ul>
+
+                <div class="callout">
+                    <h4>The Gap We Address</h4>
+                    <p>There is no principled, comparative understanding of what constitutes an optimal perceptual
+                        feature space for guiding the synthesis of 3D medical images. Our research fills this gap.</p>
+                </div>
+            </section>
+
+            <section id="objectives" class="project-section">
+                <h2>Research Objectives</h2>
+                <ul>
+                    <li>Develop a stable and efficient <strong>3D Wasserstein GAN (WGAN-GP)</strong> framework with a
+                        lightweight 3D-MDRN generator</li>
+                    <li>Conduct a <strong>novel systematic comparison</strong> of perceptual loss paradigms using:
+                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                            <li>Task-specific medical segmentation transformer (<strong>Swin UNETR</strong>)</li>
+                            <li>Generalist self-supervised foundation model (<strong>DINOv3</strong>)</li>
+                        </ul>
+                    </li>
+                    <li>Determine which feature space (domain-specific vs. generalist) yields superior performance</li>
+                    <li>Establish a robust data preparation pipeline with realistic clinical acquisition simulation</li>
+                </ul>
+            </section>
+
+            <section id="architecture" class="project-section">
+                <h2>Proposed Technical Framework</h2>
+                <p>Our model is a <strong>Wasserstein GAN with Gradient Penalty (WGAN-GP)</strong> architecture:</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-placeholder">
+                        <strong>Architecture Diagram</strong><br>
+                        LR Input → 3D-MDRN Generator → HR Output<br>
+                        ↓<br>
+                        3D PatchGAN Critic + Perceptual Feature Extractor<br>
+                        ↓<br>
+                        Composite Loss (Adversarial + Perceptual + L1)
+                    </div>
+                    <p class="caption">Figure 1: WGAN-GP Architecture Overview</p>
+                </div>
+
+                <h3>Key Components</h3>
+                <ul>
+                    <li><strong>Generator (3D-MDRN):</strong> Lightweight, efficient network that creates super-resolved
+                        volume from low-resolution input</li>
+                    <li><strong>Perceptual Feature Extractor:</strong> Frozen, pre-trained model (Swin UNETR or DINOv3)
+                        providing high-level feature guidance</li>
+                    <li><strong>Critic (3D PatchGAN):</strong> Discriminator evaluating "realness" of 3D patches to
+                        encourage fine-detail generation</li>
+                    <li><strong>Composite Loss Function:</strong> Balanced combination of Adversarial, Perceptual, and
+                        Pixel-wise (L1) losses</li>
+                </ul>
+            </section>
+
+            <section id="perceptual-loss" class="project-section">
+                <h2>The Innovation: Two Perceptual Losses</h2>
+                <p>Our core contribution is a systematic comparison to find the best "perceptual teacher" for our
+                    generator:</p>
+
+                <div class="two-column">
+                    <div class="info-card">
+                        <h4>🏥 Swin UNETR (The Specialist)</h4>
+                        <p>A 3D transformer pre-trained on medical image segmentation.</p>
+                        <p><strong>Hypothesis:</strong> Features are highly sensitive to anatomical structure and
+                            spatial correctness, enforcing structural integrity.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🌐 DINOv3 (The Generalist)</h4>
+                        <p>A massive self-supervised model trained on billions of diverse images.</p>
+                        <p><strong>Hypothesis:</strong> Features excel at capturing realistic texture and fine-grained
+                            detail, leading to sharper images.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="datasets" class="project-section">
+                <h2>Data Sourcing & Validation</h2>
+                <p>We utilize three high-quality, complementary datasets:</p>
+
+                <div class="three-column">
+                    <div class="dataset-card">
+                        <h4>Human Connectome Project (HCP)</h4>
+                        <p>Gold standard for healthy, high-resolution brain data</p>
+                        <p>0.7mm isotropic • T1w, T2w, dMRI</p>
+                    </div>
+                    <div class="dataset-card">
+                        <h4>IXI Dataset</h4>
+                        <p>Adds heterogeneity from multiple scanners for robustness</p>
+                        <p>~1.0mm isotropic • Multi-scanner</p>
+                    </div>
+                    <div class="dataset-card">
+                        <h4>BraTS Dataset</h4>
+                        <p>Pathological data (brain tumors) for clinical validation</p>
+                        <p>~1.0mm isotropic • Glioma Patients</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pipeline" class="project-section">
+                <h2>Preprocessing Pipeline</h2>
+
+                <h3>Step-by-Step Process</h3>
+                <ul>
+                    <li><strong>Load & Normalize:</strong> Load NIfTI files using Nibabel, apply N4ITK Bias Field
+                        Correction, normalize using Z-score</li>
+                    <li><strong>Template Registration:</strong> Align all HR scans to MNI152 template using ANTsPy</li>
+                    <li><strong>LR Simulation:</strong> Apply Gaussian blur + downsampling (thick-slice) or subsample
+                        every N-th slice (sparse-slice)</li>
+                    <li><strong>Co-registration:</strong> Upsample LR volume, perform rigid registration for perfect
+                        voxel-wise alignment</li>
+                    <li><strong>Patch Extraction:</strong> Extract 32×32×32 3D patches using MONAI with data
+                        augmentation</li>
+                </ul>
+
+                <h3>Technology Stack</h3>
+                <div class="tech-stack-grid">
+                    <div class="tech-item">PyTorch 2.0+</div>
+                    <div class="tech-item">MONAI 1.3+</div>
+                    <div class="tech-item">CUDA 11.8+</div>
+                    <div class="tech-item">ANTsPy</div>
+                    <div class="tech-item">SimpleITK</div>
+                    <div class="tech-item">Nibabel</div>
+                    <div class="tech-item">NumPy</div>
+                    <div class="tech-item">Matplotlib</div>
+                </div>
+            </section>
+
+            <section id="evaluation" class="project-section">
+                <h2>Evaluation Protocol</h2>
+
+                <h3>Quantitative Metrics</h3>
+                <ul>
+                    <li><strong>Peak Signal-to-Noise Ratio (PSNR):</strong> Measures reconstruction error</li>
+                    <li><strong>Structural Similarity Index (SSIM):</strong> Measures perceptual similarity</li>
+                </ul>
+
+                <h3>Qualitative Evaluation</h3>
+                <ul>
+                    <li>Side-by-side visual comparisons focusing on anatomical details</li>
+                    <li>Analysis of residual maps to identify spatial error patterns</li>
+                    <li>Ablation studies to prove contribution of each component</li>
+                </ul>
+
+                <h3>Expected Outcomes</h3>
+                <ul>
+                    <li>Novel, high-performance 3D MRI Super-Resolution framework</li>
+                    <li>Fundamental insights into domain-specific vs. generalist features for medical imaging</li>
+                    <li>Performance competitive with or surpassing state-of-the-art methods</li>
+                    <li>Open-source, reproducible data preparation pipeline</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 Molindu Achintha. 3D MRI Super-Resolution Research Project.</p>
+    </footer>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>

@@ -85,26 +85,28 @@
                 </div>
             </a>
 
-            <!-- 3D MRI -->
-            <div class="project-card">
-                <h3>3D MRI Super-Resolution</h3>
-                <p>A deep learning project focused on enhancing the resolution of 3D MRI scans using GANs (Generative
-                    Adversarial Networks). This research project aims to improve medical imaging diagnosis by generating
-                    high-resolution 3D MRI volumes from low-resolution inputs, preserving anatomical details.</p>
+            <!-- 3D MRI Super-Resolution -->
+            <a href="/projects/3d-mri-super-resolution/" class="project-card featured">
+                <div class="project-badge">Featured</div>
+                <h3>Light-Weight 3D Generator for MRI Super-Resolution</h3>
+                <p>A novel Wasserstein GAN (WGAN-GP) framework for enhancing low-resolution 3D MRI brain scans. Conducts
+                    systematic comparison of perceptual loss paradigms using Swin UNETR (medical specialist) vs DINOv3
+                    (generalist) to determine optimal feature guidance for medical image synthesis.</p>
                 <ul class="project-features">
-                    <li>3D Volume Super-Resolution using GANs</li>
-                    <li>GAN-based architecture optimized for medical imaging</li>
-                    <li>Medical image preprocessing pipeline</li>
-                    <li>Quality metric evaluation (PSNR/SSIM)</li>
+                    <li>3D WGAN-GP with lightweight 3D-MDRN generator</li>
+                    <li>Novel perceptual loss comparison (Swin UNETR vs DINOv3)</li>
+                    <li>Robust preprocessing pipeline with ANTsPy and MONAI</li>
+                    <li>Trained on HCP, IXI, and BraTS datasets</li>
                 </ul>
                 <div class="project-tags">
-                    <span>Python</span>
                     <span>PyTorch</span>
+                    <span>MONAI</span>
                     <span>GANs</span>
                     <span>Medical Imaging</span>
-                    <span>Computer Vision</span>
+                    <span>3D CNNs</span>
+                    <span>Transformers</span>
                 </div>
-            </div>
+            </a>
 
             <!-- Verdex -->
             <div class="project-card">
