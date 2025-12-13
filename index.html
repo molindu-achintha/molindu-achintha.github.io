@@ -4,106 +4,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molindu Achintha - Portfolio</title>
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --text-color: #e2e8f0;
-            --accent-color: #38bdf8;
-            --card-bg: #1e293b;
-            --card-hover: #334155;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 90%;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p {
-            color: #94a3b8;
-            margin-bottom: 3rem;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            width: 100%;
-        }
-
-        .project-card {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.2s, background-color 0.2s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
-        }
-
-        .project-card:hover {
-            transform: translateY(-4px);
-            background-color: var(--card-hover);
-            border-color: var(--accent-color);
-        }
-
-        .project-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--accent-color);
-        }
-
-        .project-desc {
-            font-size: 0.9rem;
-            color: #cbd5e1;
-        }
-    </style>
+    <meta name="description"
+        content="Molindu Achintha - Full Stack Developer & ML Engineer. Building intelligent, scalable applications.">
+    <title>Molindu Achintha | Full Stack Developer & ML Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Molindu Achintha</h1>
-        <p>Software Engineer | AI Researcher | Full Stack Developer</p>
-
-        <div class="projects-grid">
-            <a href="projects/sinhala-fake-news/" class="project-card">
-                <div class="project-title">Sinhala Fake News Detection</div>
-                <div class="project-desc">
-                    An AI-powered system leveraging Agentic RAG and LLMs to detect misinformation in Sinhala news
-                    articles.
+    <div class="page-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="profile-section">
+                    <img src="https://ucfhgxicgoylzifecdrl.supabase.co/storage/v1/object/public/portfolio/profile/molindu.jpeg"
+                        alt="Molindu Achintha" class="avatar">
+                    <h1 class="name">Molindu Achintha</h1>
+                    <p class="title">Full Stack Developer & ML Engineer</p>
+                    <p class="tagline">Building intelligent, scalable applications</p>
                 </div>
-            </a>
-            <!-- Add more projects here in the future -->
-        </div>
+
+                <div class="sidebar-info">
+                    <ul class="info-list">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <span>Sri Lanka</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
+                            <a href="mailto:molindu.21@cse.mrt.ac.lk">molindu.21@cse.mrt.ac.lk</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://github.com/molindu-achintha" target="_blank" rel="noopener noreferrer"
+                        aria-label="GitHub">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/in/molindu-achintha" target="_blank" rel="noopener noreferrer"
+                        aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                    </a>
+                    <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume"
+                        class="resume-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                            <polyline points="10 9 9 9 8 9" />
+                        </svg>
+                        <span>Resume</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- About Section -->
+            <section class="section" id="about">
+                <h2 class="section-title">About Me</h2>
+                <p class="bio">
+                    Computer Science undergraduate at the University of Moratuwa passionate about using AI, machine
+                    learning, and data analytics to solve real-world problems. Experienced in building solutions in
+                    computer vision, NLP, gaze estimation, and predictive modelling through internships and industry
+                    projects. Motivated to create technology that helps people, improves efficiency, and brings new
+                    ideas to life.
+                </p>
+            </section>
+
+            <!-- Skills Section -->
+            <section class="section" id="skills">
+                <h2 class="section-title">Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Languages</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">C++</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">Swift</span>
+                            <span class="tag">SQL</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>AI & Machine Learning</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">Computer Vision</span>
+                            <span class="tag">NLP</span>
+                            <span class="tag">GANs</span>
+                            <span class="tag">Reinforcement Learning</span>
+                            <span class="tag">Predictive Modeling</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Frameworks & Libraries</h3>
+                        <div class="skill-tags">
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">TensorFlow</span>
+                            <span class="tag">Scikit-learn</span>
+                            <span class="tag">Keras</span>
+                            <span class="tag">OpenCV</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">NumPy</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Development & Cloud</h3>
+                        <div class="skill-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Flask</span>
+                            <span class="tag">REST APIs</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">AWS</span>
+                            <span class="tag">Git</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section class="section" id="experience">
+                <h2 class="section-title">Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <h3>Project Lead - Machine Learning and R&D</h3>
+                                <span class="company">Tortil Inc.</span>
+                            </div>
+                            <span class="duration">Aug 2025 - Present · Remote</span>
+                            <p>Leading ML and R&D projects including an agentic-AI-powered CMS and developing Continuity
+                                Checker - a computer vision system for detecting continuity mismatches in film
+                                production.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <h3>Leader - AI Team</h3>
+                                <span class="company">Square1AI</span>
+                            </div>
+                            <span class="duration">Sep 2025 - Present · Remote</span>
+                            <p>Leading the AI team at a startup to build next-generation agentic-AI learning platform
+                                with personalized, RAG-powered tools for students and teachers.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <h3>ML and R&D Engineering Intern</h3>
+                                <span class="company">Braingaze</span>
+                            </div>
+                            <span class="duration">Dec 2024 - May 2025 · Remote</span>
+                            <p>Adapted and enhanced eye-tracking analysis tools to extract vergence and pupil signals
+                                from video and ARKit data, improving gaze-point estimation accuracy.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <h3>Game Developer - Part Time</h3>
+                                <span class="company">Braingaze</span>
+                            </div>
+                            <span class="duration">Mar 2024 - Dec 2025 · Remote</span>
+                            <p>Developed two gaze-controlled therapeutic games for the BrainGaze Focus platform to
+                                support ADHD and ASD therapy.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section class="section" id="education">
+                <h2 class="section-title">Education</h2>
+                <div class="education-card">
+                    <div class="edu-header">
+                        <h3>University of Moratuwa</h3>
+                        <span class="degree">B.Sc. in Computer Science and Engineering</span>
+                    </div>
+                    <span class="edu-duration">2022 – 2026 (Expected) · Moratuwa, Sri Lanka</span>
+                    <p>Undergraduate program focusing on Artificial Intelligence, Machine Learning, and Software
+                        Engineering.</p>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section class="section" id="projects">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <a href="projects/sinhala-fake-news/" class="project-card">
+                        <h3>Multimodal Sinhala Fact-Checking RAG System</h3>
+                        <p>Multi-agent RAG system for Sinhala misinformation detection with claim extraction, linguistic
+                            processing, evidence retrieval, and verdict generation.</p>
+                        <div class="project-tags">
+                            <span>LangChain</span>
+                            <span>Pinecone</span>
+                            <span>LLMs</span>
+                            <span>NLP</span>
+                        </div>
+                    </a>
+                    <div class="project-card">
+                        <h3>3D MRI Super-Resolution</h3>
+                        <p>Deep learning project enhancing 3D MRI scan resolution using GANs for improved medical
+                            imaging diagnosis.</p>
+                        <div class="project-tags">
+                            <span>PyTorch</span>
+                            <span>GANs</span>
+                            <span>Medical Imaging</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Verdex Mobile App</h3>
+                        <p>Mobile app for farmers to detect crop diseases from images and get AI-powered
+                            recommendations.</p>
+                        <div class="project-tags">
+                            <span>AWS EC2</span>
+                            <span>Gemini API</span>
+                            <span>Mobile Dev</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Diabetic Retinopathy Detection</h3>
+                        <p>ML classifier using combined InceptionNet and ResNet outputs with SMOTE for class imbalance
+                            handling.</p>
+                        <div class="project-tags">
+                            <span>TensorFlow</span>
+                            <span>Keras</span>
+                            <span>SMOTE</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certifications Section -->
+            <section class="section" id="certifications">
+                <h2 class="section-title">Certifications</h2>
+                <div class="certifications-grid">
+                    <a href="https://www.udemy.com/certificate/UC-2e866a4d-2b92-4ad3-91ec-949d5c5dcec2/" target="_blank"
+                        class="cert-card">
+                        <span class="cert-name">iOS & Swift - Complete iOS App Development Bootcamp</span>
+                        <span class="cert-issuer">Udemy · 2024</span>
+                    </a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/H4MUPCYVQJ88" target="_blank"
+                        class="cert-card">
+                        <span class="cert-name">Supervised Machine Learning: Regression and Classification</span>
+                        <span class="cert-issuer">Coursera · 2024</span>
+                    </a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/9KP7NUVGQ2WP" target="_blank"
+                        class="cert-card">
+                        <span class="cert-name">Advanced Learning Algorithms</span>
+                        <span class="cert-issuer">Coursera · 2024</span>
+                    </a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/KANSAXGGW8VH" target="_blank"
+                        class="cert-card">
+                        <span class="cert-name">NLP with Classification and Vector Spaces</span>
+                        <span class="cert-issuer">Coursera · 2024</span>
+                    </a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/SNSAN9RF7HWQ" target="_blank"
+                        class="cert-card">
+                        <span class="cert-name">Introduction to TensorFlow for AI, ML, and Deep Learning</span>
+                        <span class="cert-issuer">Coursera · 2024</span>
+                    </a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/TN87ZCRDWHYK" target="_blank"
+                        class="cert-card">
+                        <span class="cert-name">Deep Neural Networks with PyTorch</span>
+                        <span class="cert-issuer">Coursera · 2024</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="section" id="contact">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-content">
+                    <p>I'm currently open to opportunities. Feel free to reach out!</p>
+                    <a href="mailto:molindu.21@cse.mrt.ac.lk" class="contact-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                        Send an Email
+                    </a>
+                </div>
+            </section>
+        </main>
     </div>
+
+    <footer class="footer">
+        <p>© 2024 Molindu Achintha. Built with passion.</p>
+    </footer>
 </body>
 
 </html>
