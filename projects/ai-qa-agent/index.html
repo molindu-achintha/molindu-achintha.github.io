@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Crowdbox AI Quality Assurance Agent - Multi-Agent System for Automated SDR Call Evaluation with LangGraph, RAG, and Enterprise CRM Integration">
+    <title>AI Quality Assurance Agent | Molindu Achintha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Project-specific styles */
+        .project-wrapper {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 0;
+            min-height: calc(100vh - var(--nav-height));
+            padding-top: var(--nav-height);
+        }
+
+        .project-sidebar {
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            top: var(--nav-height);
+            height: calc(100vh - var(--nav-height));
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .project-sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-sidebar-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-nav {
+            list-style: none;
+        }
+
+        .project-nav li {
+            margin-bottom: 0.25rem;
+        }
+
+        .project-nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .project-nav a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+        }
+
+        .project-main {
+            padding: 3rem 4rem;
+            max-width: 900px;
+        }
+
+        .project-hero {
+            margin-bottom: 3rem;
+        }
+
+        .project-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .callout {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            border: 1px solid var(--accent-primary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .callout h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .callout p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .callout.highlight {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(56, 189, 248, 0.1) 100%);
+            border-color: #22c55e;
+        }
+
+        .callout.highlight h4 {
+            color: #22c55e;
+        }
+
+        .callout.warning {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-color: #f59e0b;
+        }
+
+        .callout.warning h4 {
+            color: #f59e0b;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-primary);
+            display: inline-block;
+        }
+
+        .project-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-section h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding-left: 1.25rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-section ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        .project-section ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .project-section ol li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .component-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .component-card.orange {
+            border-left: 3px solid #f97316;
+        }
+
+        .component-card.green {
+            border-left: 3px solid #22c55e;
+        }
+
+        .component-card.purple {
+            border-left: 3px solid #a855f7;
+        }
+
+        .component-card.gray {
+            border-left: 3px solid #64748b;
+        }
+
+        .component-card.teal {
+            border-left: 3px solid #14b8a6;
+        }
+
+        .component-card.yellow {
+            border-left: 3px solid #eab308;
+        }
+
+        .component-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .component-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .info-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+        }
+
+        .info-card p {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram-container {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .diagram-placeholder {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .diagram-container .caption {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .flow-step {
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .flow-step .number {
+            background: var(--accent-gradient);
+            color: var(--bg-primary);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .tech-stack-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+
+        .tech-stack-table th,
+        .tech-stack-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .tech-stack-table th {
+            background-color: var(--bg-tertiary);
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .tech-stack-table td {
+            color: var(--text-secondary);
+        }
+
+        .code-block {
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .code-block .key {
+            color: var(--accent-primary);
+        }
+
+        .code-block .value {
+            color: #22c55e;
+        }
+
+        .code-block .number {
+            color: #f59e0b;
+        }
+
+        .objectives-list {
+            display: grid;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .objective-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+        }
+
+        .objective-item .icon {
+            font-size: 1.25rem;
+        }
+
+        .objective-item p {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            .project-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .project-sidebar {
+                position: relative;
+                top: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .project-main {
+                padding: 2rem 1.5rem;
+            }
+
+            .two-column,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Global Navigation -->
+    <nav class="global-nav"
+        style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background-color: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(148, 163, 184, 0.1); z-index: 1000;">
+        <div class="nav-container"
+            style="max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;">
+            <a href="/" class="nav-logo"
+                style="font-size: 1.125rem; font-weight: 700; background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Molindu
+                Achintha</a>
+            <ul class="nav-links"
+                style="display: flex; align-items: center; gap: 0.5rem; list-style: none; margin: 0; padding: 0;">
+                <li><a href="/"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Home</a>
+                </li>
+                <li><a href="/projects.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Projects</a>
+                </li>
+                <li><a href="/experience.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Experience</a>
+                </li>
+                <li><a href="/certifications.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Certifications</a>
+                </li>
+                <li><a href="mailto:molindu.21@cse.mrt.ac.lk" class="nav-contact"
+                        style="padding: 0.5rem 1rem; background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); color: #0f172a !important; font-size: 0.875rem; font-weight: 600; border-radius: 0.375rem; text-decoration: none;">Contact</a>
+                </li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation" style="display: none;">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="project-wrapper">
+        <!-- Project Sidebar -->
+        <aside class="project-sidebar">
+            <div class="project-sidebar-title">AI QA Agent</div>
+            <div class="project-sidebar-subtitle">Crowdbox Enterprise System</div>
+
+            <ul class="project-nav">
+                <li><a href="#summary">Executive Summary</a></li>
+                <li><a href="#objectives">Objectives</a></li>
+
+                <div class="nav-section-label">Architecture</div>
+                <li><a href="#architecture">System Overview</a></li>
+                <li><a href="#saas">SaaS Integrations</a></li>
+                <li><a href="#ingestion">Ingestion Pipeline</a></li>
+                <li><a href="#ai-layer">AI Agent Layer</a></li>
+                <li><a href="#policy-store">Policy Store (RAG)</a></li>
+
+                <div class="nav-section-label">Output & UI</div>
+                <li><a href="#storage">Data Storage</a></li>
+                <li><a href="#dashboards">Dashboards</a></li>
+                <li><a href="#alerts">Alerts & Escalations</a></li>
+
+                <div class="nav-section-label">Technical</div>
+                <li><a href="#process-flow">Process Flow</a></li>
+                <li><a href="#tech-stack">Tech Stack</a></li>
+            </ul>
+        </aside>
+
+        <!-- Project Main Content -->
+        <main class="project-main">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <a href="/projects.html">Projects</a>
+                <span>/</span>
+                <span>AI Quality Assurance Agent</span>
+            </div>
+
+            <div class="project-hero">
+                <h1>Crowdbox AI Quality Assurance Agent</h1>
+                <p class="subtitle">Enterprise Multi-Agent System for Automated SDR Call Evaluation with LangGraph
+                    Orchestration, RAG-Powered Policy Enforcement, and Salesforce/Zoom Integration</p>
+            </div>
+
+            <section id="summary">
+                <div class="callout">
+                    <h4>Executive Summary</h4>
+                    <p>Crowdbox's AI Quality Assurance Agent automates the evaluation of SDR and cold-calling
+                        performance across multiple enterprise campaigns. The system integrates <strong>Salesforce
+                            Enterprise</strong>, <strong>Zoom Workspaces</strong>, and <strong>AI-powered evaluation
+                            layers</strong> to deliver consistent, objective, and scalable QA scoring. This system
+                        replaces manual QA, enabling <strong>100% call coverage</strong>, faster feedback loops, and
+                        consistent scoring across campaigns like Dell, Check Point, Cisco, Palo Alto, Lenovo, Nutanix,
+                        Juniper, Sage, and Schneider Electric.</p>
+                </div>
+
+                <h3>System Workflow</h3>
+                <p>Upon completion of a call logged in Salesforce, the QA Agent automatically:</p>
+                <ol>
+                    <li>Fetches the associated Zoom recording</li>
+                    <li>Transcribes it using Whisper/AssemblyAI with speaker diarization</li>
+                    <li>Analyzes the transcript via a multi-agent AI evaluation framework</li>
+                    <li>Scores the call against campaign-specific rubrics</li>
+                    <li>Writes results and coaching notes back to Salesforce</li>
+                    <li>Updates dashboards and alerts QA managers for anomalies</li>
+                </ol>
+            </section>
+
+            <section id="objectives" class="project-section">
+                <h2>Project Objectives</h2>
+                <div class="objectives-list">
+                    <div class="objective-item">
+                        <span class="icon">🤖</span>
+                        <p><strong>Automate QA evaluation</strong> and compliance scoring for all recorded calls</p>
+                    </div>
+                    <div class="objective-item">
+                        <span class="icon">📉</span>
+                        <p><strong>Reduce QA manual effort by ≥90%</strong> through intelligent automation</p>
+                    </div>
+                    <div class="objective-item">
+                        <span class="icon">📊</span>
+                        <p><strong>Deliver personalized coaching insights</strong> for every SDR agent</p>
+                    </div>
+                    <div class="objective-item">
+                        <span class="icon">🔗</span>
+                        <p><strong>Integrate seamlessly</strong> with existing CRM (Salesforce) and calling stack
+                            (Zoom)</p>
+                    </div>
+                    <div class="objective-item">
+                        <span class="icon">🔒</span>
+                        <p><strong>Maintain full data privacy</strong> and compliance with AU privacy standards</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="architecture" class="project-section">
+                <h2>System Architecture Overview</h2>
+
+                <div class="diagram-container">
+                    <div class="diagram-placeholder">
+                        <strong>Architecture Layers:</strong><br><br>
+                        <strong style="color: #38bdf8;">SaaS Integrations</strong> → Salesforce CRM + Zoom
+                        Workspaces<br>
+                        ↓<br>
+                        <strong style="color: #f97316;">Ingestion & Pre-processing</strong> → Lambda + AssemblyAI
+                        Transcription<br>
+                        ↓<br>
+                        <strong style="color: #22c55e;">AI Agent Layer</strong> → LangGraph Multi-Agent Orchestrator +
+                        Worker Agents<br>
+                        ↓<br>
+                        <strong style="color: #a855f7;">Policy Store</strong> → Pinecone Vector DB (RAG)<br>
+                        ↓<br>
+                        <strong style="color: #64748b;">Data Storage</strong> → AWS RDS + S3<br>
+                        ↓<br>
+                        <strong style="color: #14b8a6;">Dashboards</strong> → Salesforce LWC + Admin Panel
+                    </div>
+                    <p class="caption">Figure 1: End-to-End System Architecture</p>
+                </div>
+            </section>
+
+            <section id="saas" class="project-section">
+                <h2>1️⃣ SaaS Integrations</h2>
+                <p>This is the entry point of the system — where call data originates.</p>
+
+                <div class="two-column">
+                    <div class="component-card">
+                        <h4>Salesforce CRM</h4>
+                        <p>Lead management, call logging, and result storage. Triggers webhook on "Passed to AM" or
+                            "Callback Booked" status.</p>
+                    </div>
+                    <div class="component-card">
+                        <h4>Zoom Cloud Recordings</h4>
+                        <p>Call recordings API. Downloads audio files using Meeting ID for transcription.</p>
+                    </div>
+                </div>
+
+                <h3>Webhook Workflow</h3>
+                <ol>
+                    <li>When a sales call is logged in Salesforce (lead marked as "Passed to AM" or "Callback Booked"),
+                        a webhook event is triggered</li>
+                    <li>The webhook sends metadata: Call ID, Zoom Meeting ID, Caller (SDR), Campaign type (Dell, Cisco,
+                        Palo Alto, etc.)</li>
+                    <li>The Zoom API is called using the Meeting ID to download the call recording</li>
+                </ol>
+
+                <div class="callout highlight">
+                    <h4>Outcome</h4>
+                    <p>A new call record + its audio recording enters the Ingestion Pipeline for transcription.</p>
+                </div>
+            </section>
+
+            <section id="ingestion" class="project-section">
+                <h2>2️⃣ Ingestion & Preprocessing</h2>
+                <p>Converts raw audio into structured, speaker-labeled transcripts.</p>
+
+                <div class="component-grid">
+                    <div class="component-card orange">
+                        <h4>Ingestion Orchestrator</h4>
+                        <p>Receives call metadata + recording, manages pipeline flow</p>
+                    </div>
+                    <div class="component-card orange">
+                        <h4>AssemblyAI / Whisper</h4>
+                        <p>Speaker diarization, text transcription, timestamp alignment</p>
+                    </div>
+                </div>
+
+                <h3>Process Flow</h3>
+                <ol>
+                    <li>Ingestion Orchestrator receives call metadata + recording</li>
+                    <li>Audio file passed to AssemblyAI for:
+                        <ul>
+                            <li>Speaker diarization (who's speaking when)</li>
+                            <li>Text transcription</li>
+                            <li>Timestamp alignment</li>
+                        </ul>
+                    </li>
+                    <li>System returns speaker-labeled transcript and stores in S3</li>
+                </ol>
+
+                <div class="callout">
+                    <h4>Output</h4>
+                    <p>A clean transcript with speaker tags, ready for semantic analysis by the AI Agent Layer.</p>
+                </div>
+            </section>
+
+            <section id="ai-layer" class="project-section">
+                <h2>3️⃣ AI Agent Layer</h2>
+                <p>The core intelligence of the system using a <strong>multi-agent orchestration approach</strong> with
+                    LangGraph.</p>
+
+                <h3>a. LangGraph Multi-Agent Orchestrator</h3>
+                <p>Coordinates specialized worker agents and manages their task flow. Each worker agent focuses on one
+                    QA criterion.</p>
+
+                <h3>b. Worker Agents</h3>
+                <div class="component-grid">
+                    <div class="component-card green">
+                        <h4>🎭 Tone Agent</h4>
+                        <p>Analyzes politeness, empathy, professionalism</p>
+                    </div>
+                    <div class="component-card green">
+                        <h4>🤝 Rapport Agent</h4>
+                        <p>Detects relationship-building attempts</p>
+                    </div>
+                    <div class="component-card green">
+                        <h4>🎯 Delivery Agent</h4>
+                        <p>Assesses clarity, pace, and confidence</p>
+                    </div>
+                    <div class="component-card green">
+                        <h4>⚖️ Compliance Agent</h4>
+                        <p>Flags DNC violations, false claims, aggressive tone</p>
+                    </div>
+                </div>
+
+                <h3>c. Supervisor Agent</h3>
+                <p>Aggregates all worker evaluations into a unified scoring matrix — aligning with rubric weights (e.g.,
+                    Rapport 20%, Discovery 30%, Compliance 10%).</p>
+                <ul>
+                    <li>Detects conflicting evaluations</li>
+                    <li>Requests re-runs or remediation from worker agents</li>
+                    <li>Ensures final rubric compliance</li>
+                </ul>
+
+                <h3>d. Policy Enforcement Agent</h3>
+                <p>Compares each evaluation against official QA rubrics and compliance policies (fetched dynamically
+                    from the Vector DB). If a rule is violated, it triggers a remediation loop or flags the QA Admin
+                    Dashboard.</p>
+
+                <h3>Output Format</h3>
+                <div class="code-block">
+                    {<br>
+                    &nbsp;&nbsp;<span class="key">"tone"</span>: <span class="number">18</span>,<br>
+                    &nbsp;&nbsp;<span class="key">"rapport"</span>: <span class="number">22</span>,<br>
+                    &nbsp;&nbsp;<span class="key">"delivery"</span>: <span class="number">15</span>,<br>
+                    &nbsp;&nbsp;<span class="key">"compliance"</span>: <span class="number">10</span>,<br>
+                    &nbsp;&nbsp;<span class="key">"overall"</span>: <span class="number">85</span>,<br>
+                    &nbsp;&nbsp;<span class="key">"flags"</span>: [<span class="value">"No meeting time
+                        confirmed"</span>],<br>
+                    &nbsp;&nbsp;<span class="key">"recommendations"</span>: [<span class="value">"Reconfirm next steps
+                        before ending call."</span>]<br>
+                    }
+                </div>
+            </section>
+
+            <section id="policy-store" class="project-section">
+                <h2>4️⃣ Policy / Criteria Store (RAG)</h2>
+                <p>Technology: <strong>Pinecone Vector Database</strong></p>
+
+                <div class="component-card purple">
+                    <h4>RAG Store Purpose</h4>
+                    <p>Retrieval-Augmented Generation store for rubrics and policies. Stores QA rubrics, scoring
+                        criteria, campaign scripts, and compliance documentation as embeddings.</p>
+                </div>
+
+                <h3>How It Works</h3>
+                <ul>
+                    <li>Stores QA rubrics, scoring criteria, campaign scripts as <strong>embeddings</strong></li>
+                    <li>During evaluation, orchestrator retrieves relevant rubric context (e.g., "Dell campaign QA
+                        policy")</li>
+                    <li>Injects context into the prompt for LLM agents</li>
+                    <li>Enables <strong>dynamic context-injection</strong> for consistent evaluations across campaigns
+                    </li>
+                </ul>
+            </section>
+
+            <section id="storage" class="project-section">
+                <h2>5️⃣ Data Storage & Analytics</h2>
+                <p>Persists all outputs for reporting, retraining, and auditing.</p>
+
+                <h3>Data Stored</h3>
+                <ul>
+                    <li>Call metadata (Agent, Campaign, Timestamp)</li>
+                    <li>Transcripts & scores</li>
+                    <li>Rubric JSON</li>
+                    <li>Coaching notes</li>
+                    <li>Confidence metrics</li>
+                </ul>
+
+                <div class="component-grid">
+                    <div class="component-card gray">
+                        <h4>AWS RDS (PostgreSQL)</h4>
+                        <p>Structured evaluation results and metadata</p>
+                    </div>
+                    <div class="component-card gray">
+                        <h4>DynamoDB</h4>
+                        <p>Serverless option for high-scale reads</p>
+                    </div>
+                    <div class="component-card gray">
+                        <h4>S3</h4>
+                        <p>Raw audio files and transcripts</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="dashboards" class="project-section">
+                <h2>6️⃣ Dashboards</h2>
+
+                <div class="component-grid">
+                    <div class="component-card teal">
+                        <h4>Human QA Feedback UI</h4>
+                        <p>Review AI evaluations, manually adjust scores, provide comments, flag incorrect assessments.
+                            Acts as training feedback loop.</p>
+                    </div>
+                    <div class="component-card teal">
+                        <h4>QA Admin Dashboard</h4>
+                        <p>Managerial view: average scores per agent, campaign comparisons, pass/fail statistics, common
+                            red flags.</p>
+                    </div>
+                    <div class="component-card teal">
+                        <h4>Caller/Agent Dashboard</h4>
+                        <p>Personalized feedback: score breakdown, coaching recommendations, trend metrics over time.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="alerts" class="project-section">
+                <h2>7️⃣ QA Metric Alerts & Escalations</h2>
+                <p>Detects anomalies or major compliance breaches and triggers alerts.</p>
+
+                <div class="callout warning">
+                    <h4>Example Alerts</h4>
+                    <p>
+                        • "Agent scored < 60% three times this week"<br>
+                            • "Compliance breach detected — false claim about product warranty"<br>
+                            • "No meeting confirmation in 80% of calls"
+                    </p>
+                </div>
+
+                <h3>Alert Channels</h3>
+                <ul>
+                    <li>Slack / Teams notifications</li>
+                    <li>Salesforce notifications</li>
+                    <li>QA Manager emails</li>
+                </ul>
+
+                <h3>Feedback Loop</h3>
+                <p>Ensures continuous learning and calibration:</p>
+                <ol>
+                    <li>Human QA feedback (manual overrides) fed back into the system</li>
+                    <li>Rubrics or prompts refined automatically</li>
+                    <li>Model accuracy improves over time (supervised fine-tuning)</li>
+                </ol>
+            </section>
+
+            <section id="process-flow" class="project-section">
+                <h2>End-to-End Process Flow</h2>
+
+                <div class="flow-steps">
+                    <div class="flow-step"><span class="number">1</span> Salesforce/Zoom webhook triggers ingestion
+                    </div>
+                    <div class="flow-step"><span class="number">2</span> Audio downloaded → transcribed by AssemblyAI
+                    </div>
+                    <div class="flow-step"><span class="number">3</span> Transcript passed to multi-agent evaluator
+                    </div>
+                    <div class="flow-step"><span class="number">4</span> Worker agents assess each criterion</div>
+                    <div class="flow-step"><span class="number">5</span> Supervisor + Policy agents validate</div>
+                    <div class="flow-step"><span class="number">6</span> Output stored in DB → surfaced in dashboards
+                    </div>
+                    <div class="flow-step"><span class="number">7</span> Human feedback fine-tunes agents</div>
+                </div>
+
+                <h3>Salesforce Write-back</h3>
+                <p>The system updates the Lead/Call record with:</p>
+                <ul>
+                    <li><code>QA_Score__c</code> - Overall quality score</li>
+                    <li><code>QA_Result__c</code> - Pass/Fail status</li>
+                    <li><code>QA_Coaching_Notes__c</code> - AI-generated coaching recommendations</li>
+                    <li><code>QA_Red_Flags__c</code> - Compliance issues detected</li>
+                    <li>Transcript link for reference</li>
+                </ul>
+            </section>
+
+            <section id="tech-stack" class="project-section">
+                <h2>Technology Stack</h2>
+
+                <table class="tech-stack-table">
+                    <thead>
+                        <tr>
+                            <th>Layer</th>
+                            <th>Technology</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CRM</td>
+                            <td>Salesforce</td>
+                            <td>Data entry & result storage</td>
+                        </tr>
+                        <tr>
+                            <td>Telephony</td>
+                            <td>Zoom Workspaces</td>
+                            <td>Call recordings</td>
+                        </tr>
+                        <tr>
+                            <td>Ingestion</td>
+                            <td>AWS Lambda / Step Functions</td>
+                            <td>Pipeline orchestration</td>
+                        </tr>
+                        <tr>
+                            <td>ASR</td>
+                            <td>AssemblyAI / Whisper</td>
+                            <td>Audio → text transcription</td>
+                        </tr>
+                        <tr>
+                            <td>Orchestration</td>
+                            <td>LangGraph / Autogen</td>
+                            <td>Multi-agent coordination</td>
+                        </tr>
+                        <tr>
+                            <td>LLM</td>
+                            <td>Claude 3.5 Sonnet</td>
+                            <td>Scoring & reasoning</td>
+                        </tr>
+                        <tr>
+                            <td>Vector DB</td>
+                            <td>Pinecone</td>
+                            <td>Rubric context retrieval (RAG)</td>
+                        </tr>
+                        <tr>
+                            <td>Storage</td>
+                            <td>AWS RDS + S3</td>
+                            <td>Results & audit trail</td>
+                        </tr>
+                        <tr>
+                            <td>Dashboards</td>
+                            <td>Salesforce LWC</td>
+                            <td>Visualization & feedback</td>
+                        </tr>
+                        <tr>
+                            <td>Alerts</td>
+                            <td>Slack / Email / SF Flow</td>
+                            <td>Anomaly detection</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 Molindu Achintha. Crowdbox AI Quality Assurance Agent Project.</p>
+    </footer>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
