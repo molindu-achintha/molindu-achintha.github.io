@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Verdex - AI-Powered Crop Disease Identifier and Management Platform for Sri Lankan Rice Farmers using Flutter, PyTorch CNN, and AWS">
+    <title>Verdex - AI Crop Disease Identifier | Molindu Achintha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Project-specific styles */
+        .project-wrapper {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 0;
+            min-height: calc(100vh - var(--nav-height));
+            padding-top: var(--nav-height);
+        }
+
+        .project-sidebar {
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            top: var(--nav-height);
+            height: calc(100vh - var(--nav-height));
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .project-sidebar-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-sidebar-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-nav {
+            list-style: none;
+        }
+
+        .project-nav li {
+            margin-bottom: 0.25rem;
+        }
+
+        .project-nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .project-nav a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-section-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+        }
+
+        .project-main {
+            padding: 3rem 4rem;
+            max-width: 900px;
+        }
+
+        .project-hero {
+            margin-bottom: 3rem;
+        }
+
+        .project-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #22c55e 0%, #84cc16 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .callout {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(132, 204, 22, 0.1) 100%);
+            border: 1px solid #22c55e;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .callout h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #22c55e;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .callout p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .callout.blue {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            border-color: var(--accent-primary);
+        }
+
+        .callout.blue h4 {
+            color: var(--accent-primary);
+        }
+
+        .callout.warning {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-color: #f59e0b;
+        }
+
+        .callout.warning h4 {
+            color: #f59e0b;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #22c55e;
+            display: inline-block;
+        }
+
+        .project-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #84cc16;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-section h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding-left: 1.25rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-section ul li::before {
+            content: '🌾';
+            position: absolute;
+            left: 0;
+            font-size: 0.75rem;
+        }
+
+        .project-section ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .project-section ol li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #22c55e;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .component-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .component-card.green {
+            border-left: 3px solid #22c55e;
+        }
+
+        .component-card.blue {
+            border-left: 3px solid #38bdf8;
+        }
+
+        .component-card.purple {
+            border-left: 3px solid #a855f7;
+        }
+
+        .component-card.orange {
+            border-left: 3px solid #f97316;
+        }
+
+        .component-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .component-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .info-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #22c55e;
+            margin-bottom: 0.75rem;
+            margin-top: 0;
+        }
+
+        .info-card p {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .disease-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .disease-card .emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .disease-card h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .disease-card p {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .diagram-container {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .diagram-placeholder {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .diagram-container .caption {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+
+        .tech-stack-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+
+        .tech-stack-table th,
+        .tech-stack-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .tech-stack-table th {
+            background-color: var(--bg-tertiary);
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .tech-stack-table td {
+            color: var(--text-secondary);
+        }
+
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.8rem;
+        }
+
+        .metrics-table th,
+        .metrics-table td {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .metrics-table th {
+            background-color: var(--bg-tertiary);
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .metrics-table td {
+            color: var(--text-secondary);
+        }
+
+        .metrics-table .highlight {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .sdg-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .sdg-badge {
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .flow-step {
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .flow-step .number {
+            background: linear-gradient(135deg, #22c55e 0%, #84cc16 100%);
+            color: var(--bg-primary);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .feature-list {
+            display: grid;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+        }
+
+        .feature-item .icon {
+            font-size: 1.25rem;
+        }
+
+        .feature-item p {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+
+        .feature-item strong {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 900px) {
+            .project-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .project-sidebar {
+                position: relative;
+                top: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .project-main {
+                padding: 2rem 1.5rem;
+            }
+
+            .two-column,
+            .component-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .disease-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Global Navigation -->
+    <nav class="global-nav"
+        style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background-color: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(148, 163, 184, 0.1); z-index: 1000;">
+        <div class="nav-container"
+            style="max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;">
+            <a href="/" class="nav-logo"
+                style="font-size: 1.125rem; font-weight: 700; background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Molindu
+                Achintha</a>
+            <ul class="nav-links"
+                style="display: flex; align-items: center; gap: 0.5rem; list-style: none; margin: 0; padding: 0;">
+                <li><a href="/"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Home</a>
+                </li>
+                <li><a href="/projects.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Projects</a>
+                </li>
+                <li><a href="/experience.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Experience</a>
+                </li>
+                <li><a href="/certifications.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; border-radius: 0.375rem; text-decoration: none;">Certifications</a>
+                </li>
+                <li><a href="mailto:molindu.21@cse.mrt.ac.lk" class="nav-contact"
+                        style="padding: 0.5rem 1rem; background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); color: #0f172a !important; font-size: 0.875rem; font-weight: 600; border-radius: 0.375rem; text-decoration: none;">Contact</a>
+                </li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation" style="display: none;">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="project-wrapper">
+        <!-- Project Sidebar -->
+        <aside class="project-sidebar">
+            <div class="project-sidebar-title">Verdex</div>
+            <div class="project-sidebar-subtitle">AI Crop Disease Identifier</div>
+
+            <ul class="project-nav">
+                <li><a href="#summary">Executive Summary</a></li>
+                <li><a href="#problem">Problem Statement</a></li>
+                <li><a href="#features">Key Features</a></li>
+
+                <div class="nav-section-label">Architecture</div>
+                <li><a href="#architecture">System Design</a></li>
+                <li><a href="#frontend">Mobile Frontend</a></li>
+                <li><a href="#backend">Backend & API</a></li>
+
+                <div class="nav-section-label">AI/ML</div>
+                <li><a href="#dataset">Dataset</a></li>
+                <li><a href="#model">CNN Model</a></li>
+                <li><a href="#training">Training Pipeline</a></li>
+                <li><a href="#evaluation">Model Evaluation</a></li>
+
+                <div class="nav-section-label">Impact</div>
+                <li><a href="#tech-stack">Tech Stack</a></li>
+                <li><a href="#impact">Social Impact</a></li>
+            </ul>
+        </aside>
+
+        <!-- Project Main Content -->
+        <main class="project-main">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <a href="/projects.html">Projects</a>
+                <span>/</span>
+                <span>Verdex</span>
+            </div>
+
+            <div class="project-hero">
+                <h1>Verdex: AI-Powered Crop Disease Identifier</h1>
+                <p class="subtitle">A mobile application leveraging deep learning to provide instant, accurate disease
+                    diagnosis and localized treatment recommendations for Sri Lankan rice farmers, bridging the
+                    critical knowledge gap in smallholder agriculture.</p>
+            </div>
+
+            <section id="summary">
+                <div class="callout">
+                    <h4>Executive Summary</h4>
+                    <p>Verdex is an AI-powered mobile application developed using <strong>Flutter</strong> and
+                        <strong>PyTorch CNN</strong>, with a cloud-deployed backend on <strong>AWS EC2</strong>. It
+                        functions as both a disease identifier and cultivation advisor for rice farmers in Sri Lanka.
+                        By leveraging artificial intelligence, Verdex provides farmers with instant, accurate, and
+                        actionable cultivation plans directly on their smartphones, helping to bridge the critical
+                        information gap that limits productivity and profitability for approximately <strong>1 million
+                            smallholder rice farmers</strong>.
+                    </p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="number">1M+</div>
+                        <div class="label">Target Rice Farmers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">89.3%</div>
+                        <div class="label">Model Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">&lt;3s</div>
+                        <div class="label">Diagnosis Time</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="problem" class="project-section">
+                <h2>The Problem</h2>
+                <p>Sri Lankan agriculture, particularly the smallholder farming sector (approximately 1.65 million
+                    farmers), is significantly affected by crop losses due to pests and diseases, accounting for an
+                    estimated <strong>10% loss in total yield</strong>.</p>
+
+                <div class="two-column">
+                    <div class="info-card">
+                        <h4>📉 Significant Yield Loss</h4>
+                        <p>Rice farmers lose <strong>479 kg/acre (11%)</strong> in Yala season and <strong>513 kg/acre
+                                (16%)</strong> in Maha season to pests and diseases. In severe outbreaks, losses can
+                            surge to <strong>over 30%</strong>.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🔍 Knowledge Gap</h4>
+                        <p>Only <strong>~36%</strong> of farmers can correctly self-identify common rice diseases. A
+                            mere <strong>25-30%</strong> have regular access to expert advice from agricultural
+                            officers.</p>
+                    </div>
+                </div>
+
+                <h3>Current Challenges</h3>
+                <ul>
+                    <li><strong>Delayed Diagnosis:</strong> Agricultural officers may take days or weeks to visit,
+                        allowing disease to spread</li>
+                    <li><strong>Inaccurate Information:</strong> Farmers rely on guesswork or unreliable anecdotal
+                        advice</li>
+                    <li><strong>Resource Inefficiency:</strong> "Spray and pray" approach wastes money and harms the
+                        environment</li>
+                    <li><strong>Lack of Data:</strong> No real-time network for monitoring crop health across the
+                        country</li>
+                </ul>
+            </section>
+
+            <section id="features" class="project-section">
+                <h2>Key Features</h2>
+
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <span class="icon">📸</span>
+                        <p><strong>AI-Powered Image-Based Disease Detection:</strong> Capture or upload a photo of a
+                            diseased plant leaf. The AI model provides instant diagnosis with confidence score and
+                            detailed disease description.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">💊</span>
+                        <p><strong>Localized Treatment Recommendations:</strong> Step-by-step treatment plans including
+                            both organic and chemical options that are locally available and officially approved in Sri
+                            Lanka.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">📚</span>
+                        <p><strong>Comprehensive Disease Database:</strong> Fully accessible offline encyclopedia of
+                            common rice diseases with high-resolution images, symptom descriptions, and control
+                            measures.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">🌱</span>
+                        <p><strong>Cultivation Planner:</strong> Stage-by-stage cultivation plan based on Maha and Yala
+                            seasons with regional customization and task notifications.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">🌐</span>
+                        <p><strong>Multilingual Support:</strong> Full support for Sinhala (default) and English to
+                            ensure accessibility for all farmers.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="architecture" class="project-section">
+                <h2>System Architecture</h2>
+                <p>Verdex is built on a <strong>Client-Server architecture</strong> with four main pillars:</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-placeholder">
+                        <strong>Architecture Flow:</strong><br><br>
+                        <strong style="color: #22c55e;">📱 Mobile Client (Flutter)</strong><br>
+                        → User captures image → Sends to Backend API<br><br>
+                        <strong style="color: #38bdf8;">⚡ Backend Server (Flask/AWS EC2)</strong><br>
+                        → API Gateway → Routes to AI Engine<br><br>
+                        <strong style="color: #a855f7;">🧠 AI Inference Engine (PyTorch)</strong><br>
+                        → GPU-powered CNN → Returns prediction<br><br>
+                        <strong style="color: #f97316;">🗄️ Database & Storage (PostgreSQL + S3)</strong><br>
+                        → Disease data, user uploads, model weights
+                    </div>
+                    <p class="caption">Figure 1: High-Level System Architecture</p>
+                </div>
+
+                <h3>User Flow for Diagnosis</h3>
+                <div class="flow-steps">
+                    <div class="flow-step"><span class="number">1</span> User captures image</div>
+                    <div class="flow-step"><span class="number">2</span> App sends via HTTPS</div>
+                    <div class="flow-step"><span class="number">3</span> Backend routes to AI</div>
+                    <div class="flow-step"><span class="number">4</span> CNN processes image</div>
+                    <div class="flow-step"><span class="number">5</span> Returns JSON result</div>
+                    <div class="flow-step"><span class="number">6</span> App displays diagnosis</div>
+                </div>
+            </section>
+
+            <section id="frontend" class="project-section">
+                <h2>Mobile Frontend (Flutter)</h2>
+                <p>The frontend was developed using <strong>Flutter 3.27+</strong>, enabling a single codebase for both
+                    Android and future iOS platforms.</p>
+
+                <div class="component-grid">
+                    <div class="component-card green">
+                        <h4>Cross-Platform</h4>
+                        <p>Single codebase for Android (90% market share in Sri Lanka) with iOS planned</p>
+                    </div>
+                    <div class="component-card green">
+                        <h4>High Performance</h4>
+                        <p>Compiles to native ARM code with Skia graphics engine for smooth animations</p>
+                    </div>
+                    <div class="component-card green">
+                        <h4>State Management</h4>
+                        <p>Provider package for clean separation of concerns</p>
+                    </div>
+                    <div class="component-card green">
+                        <h4>Firebase Auth</h4>
+                        <p>Secure authentication with email/password and social login options</p>
+                    </div>
+                </div>
+
+                <h3>Key Screens</h3>
+                <ul>
+                    <li><strong>Home Screen:</strong> Shortcut to AI disease identifier + disease database cards</li>
+                    <li><strong>AI Disease Identifier:</strong> Camera capture or gallery upload for diagnosis</li>
+                    <li><strong>Disease Details:</strong> Comprehensive information about specific diseases</li>
+                    <li><strong>Cultivation Plan:</strong> Analysis results with actionable treatment plans</li>
+                    <li><strong>Search:</strong> Quick lookup of diseases by name or symptoms</li>
+                </ul>
+            </section>
+
+            <section id="backend" class="project-section">
+                <h2>Backend Design</h2>
+                <p>A minimalist, scalable, and secure system built on modern cloud architecture.</p>
+
+                <h3>Technology Stack</h3>
+                <div class="component-grid">
+                    <div class="component-card blue">
+                        <h4>Flask (Python)</h4>
+                        <p>Lightweight framework for RESTful APIs with seamless PyTorch integration</p>
+                    </div>
+                    <div class="component-card blue">
+                        <h4>AWS EC2</h4>
+                        <p>GPU-enabled instances (g4dn/p3) for fast ML inference</p>
+                    </div>
+                    <div class="component-card blue">
+                        <h4>PostgreSQL (RDS)</h4>
+                        <p>Managed database for disease data, treatments, and user records</p>
+                    </div>
+                    <div class="component-card blue">
+                        <h4>Amazon S3</h4>
+                        <p>Storage for disease images, model weights, and user uploads</p>
+                    </div>
+                </div>
+
+                <h3>API Endpoints</h3>
+                <table class="tech-stack-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Endpoint</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>POST</td>
+                            <td>/predict</td>
+                            <td>Accepts leaf image, returns disease name, confidence score, and details</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td>/diseases</td>
+                            <td>Returns list of all diseases for offline encyclopedia</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td>/cultivation-plan</td>
+                            <td>Returns generalized cultivation plan for disease prevention</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="dataset" class="project-section">
+                <h2>Dataset</h2>
+                <p>The dataset is the foundation of our AI model's intelligence. We use a curated collection of rice
+                    leaf images.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="number">7 GB</div>
+                        <div class="label">Total Dataset Size</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">3,355</div>
+                        <div class="label">Total Images</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">4</div>
+                        <div class="label">Classes</div>
+                    </div>
+                </div>
+
+                <h3>Disease Classes</h3>
+                <div class="disease-grid">
+                    <div class="disease-card">
+                        <div class="emoji">🌿</div>
+                        <h5>Healthy</h5>
+                        <p>Vibrant, uniform green leaves with no damage</p>
+                    </div>
+                    <div class="disease-card">
+                        <div class="emoji">🟤</div>
+                        <h5>Brown Spot</h5>
+                        <p>Circular brown spots with gray centers caused by fungus</p>
+                    </div>
+                    <div class="disease-card">
+                        <div class="emoji">🪲</div>
+                        <h5>Hispa</h5>
+                        <p>White parallel streaks from Rice Hispa beetle damage</p>
+                    </div>
+                    <div class="disease-card">
+                        <div class="emoji">💎</div>
+                        <h5>Leaf Blast</h5>
+                        <p>Diamond-shaped lesions with brown borders (fungal)</p>
+                    </div>
+                </div>
+
+                <h3>Data Preprocessing</h3>
+                <ul>
+                    <li><strong>Image Standardization:</strong> All images resized to 224×224 pixels</li>
+                    <li><strong>Normalization:</strong> Pixel values scaled from [0, 255] to [0, 1]</li>
+                    <li><strong>Train/Validation Split:</strong> 80% training, 20% validation</li>
+                    <li><strong>Data Augmentation:</strong> Rotation, flipping, zooming, brightness adjustment to expand
+                        dataset</li>
+                </ul>
+            </section>
+
+            <section id="model" class="project-section">
+                <h2>CNN Model Architecture</h2>
+                <p>We use <strong>MobileNetV2</strong> with <strong>Transfer Learning</strong> for efficient,
+                    high-accuracy inference.</p>
+
+                <div class="callout blue">
+                    <h4>Why MobileNetV2?</h4>
+                    <p><strong>Depthwise Separable Convolutions</strong> dramatically reduce computational cost while
+                        maintaining accuracy. Pre-trained on ImageNet (14M+ images), enabling transfer learning with our
+                        smaller dataset. Optimized for mobile deployment with TensorFlow Lite conversion.</p>
+                </div>
+
+                <h3>Transfer Learning Strategy</h3>
+                <ol>
+                    <li><strong>Pre-trained Base:</strong> Start with MobileNetV2 pre-trained on ImageNet</li>
+                    <li><strong>Feature Extraction:</strong> Freeze early convolutional layers to preserve learned
+                        features</li>
+                    <li><strong>Custom Classifier:</strong> Replace original 1000-class head with 4-class output for our
+                        diseases</li>
+                    <li><strong>Fine-tuning:</strong> Train only the new classifier head (optionally unfreeze last few
+                        layers)</li>
+                </ol>
+
+                <h3>Training Configuration</h3>
+                <div class="component-grid">
+                    <div class="component-card purple">
+                        <h4>Framework</h4>
+                        <p>PyTorch 2.0+ with Keras API</p>
+                    </div>
+                    <div class="component-card purple">
+                        <h4>Optimizer</h4>
+                        <p>Adam with lr=0.001</p>
+                    </div>
+                    <div class="component-card purple">
+                        <h4>Loss Function</h4>
+                        <p>Categorical Cross-Entropy</p>
+                    </div>
+                    <div class="component-card purple">
+                        <h4>Batch Size</h4>
+                        <p>32 images per batch</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="training" class="project-section">
+                <h2>Training Pipeline</h2>
+
+                <h3>Regularization Techniques</h3>
+                <ul>
+                    <li><strong>Data Augmentation:</strong> Real-time random transformations (rotation, flip, zoom,
+                        brightness)</li>
+                    <li><strong>Early Stopping:</strong> Monitor val_loss with patience=10 epochs to prevent overfitting
+                    </li>
+                    <li><strong>Model Checkpointing:</strong> Save best model when validation accuracy improves</li>
+                </ul>
+
+                <h3>Continuous Learning Loop</h3>
+                <p>The training pipeline is designed for continuous improvement:</p>
+                <div class="flow-steps">
+                    <div class="flow-step"><span class="number">1</span> Ingest new data from experts & users</div>
+                    <div class="flow-step"><span class="number">2</span> Train on AWS EC2 GPU instances</div>
+                    <div class="flow-step"><span class="number">3</span> Validate on held-out test set</div>
+                    <div class="flow-step"><span class="number">4</span> Version and store in model registry</div>
+                    <div class="flow-step"><span class="number">5</span> Deploy if outperforms current model</div>
+                </div>
+            </section>
+
+            <section id="evaluation" class="project-section">
+                <h2>Model Evaluation</h2>
+                <p>Rigorous evaluation on a <strong>430-image held-out test set</strong> that the model never sees
+                    during training.</p>
+
+                <h3>Performance Metrics</h3>
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            <th>Support</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Brown Spot</td>
+                            <td>0.9016</td>
+                            <td class="highlight">0.9322</td>
+                            <td>0.9167</td>
+                            <td>59</td>
+                        </tr>
+                        <tr>
+                            <td>Healthy</td>
+                            <td>0.8947</td>
+                            <td>0.8995</td>
+                            <td>0.8971</td>
+                            <td>189</td>
+                        </tr>
+                        <tr>
+                            <td>Hispa</td>
+                            <td>0.8313</td>
+                            <td>0.8415</td>
+                            <td>0.8364</td>
+                            <td>82</td>
+                        </tr>
+                        <tr>
+                            <td>Leaf Blast</td>
+                            <td class="highlight">0.9375</td>
+                            <td>0.9000</td>
+                            <td class="highlight">0.9184</td>
+                            <td>100</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="number">89.3%</div>
+                        <div class="label">Overall Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">0.8921</div>
+                        <div class="label">Macro F1-Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">0.8931</div>
+                        <div class="label">Weighted F1-Score</div>
+                    </div>
+                </div>
+
+                <div class="callout warning">
+                    <h4>Transparency & Limitations</h4>
+                    <p>The model displays a <strong>confidence score</strong> with every prediction. Low confidence
+                        signals uncertainty and recommends consulting a human expert. Known limitations include
+                        dependency on image quality, difficulty with early-stage symptoms, and inability to identify
+                        diseases not in the training set.</p>
+                </div>
+            </section>
+
+            <section id="tech-stack" class="project-section">
+                <h2>Complete Technology Stack</h2>
+
+                <table class="tech-stack-table">
+                    <thead>
+                        <tr>
+                            <th>Layer</th>
+                            <th>Technology</th>
+                            <th>Version</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>UI/UX Design</td>
+                            <td>Figma</td>
+                            <td>-</td>
+                            <td>Wireframes, mockups, prototypes</td>
+                        </tr>
+                        <tr>
+                            <td>Frontend</td>
+                            <td>Flutter / Dart</td>
+                            <td>3.27+ / 3.8+</td>
+                            <td>Cross-platform mobile app</td>
+                        </tr>
+                        <tr>
+                            <td>Backend API</td>
+                            <td>Flask (Python)</td>
+                            <td>3.9+</td>
+                            <td>RESTful API serving</td>
+                        </tr>
+                        <tr>
+                            <td>ML Framework</td>
+                            <td>PyTorch</td>
+                            <td>2.0+</td>
+                            <td>CNN training and inference</td>
+                        </tr>
+                        <tr>
+                            <td>Database</td>
+                            <td>PostgreSQL (RDS)</td>
+                            <td>-</td>
+                            <td>Disease data, user records</td>
+                        </tr>
+                        <tr>
+                            <td>Cloud Storage</td>
+                            <td>Amazon S3</td>
+                            <td>-</td>
+                            <td>Images, model weights</td>
+                        </tr>
+                        <tr>
+                            <td>Compute</td>
+                            <td>AWS EC2</td>
+                            <td>g4dn/p3</td>
+                            <td>GPU-powered inference</td>
+                        </tr>
+                        <tr>
+                            <td>Authentication</td>
+                            <td>Firebase Auth</td>
+                            <td>-</td>
+                            <td>User authentication</td>
+                        </tr>
+                        <tr>
+                            <td>Version Control</td>
+                            <td>Git / GitHub</td>
+                            <td>-</td>
+                            <td>Source control, CI/CD</td>
+                        </tr>
+                        <tr>
+                            <td>Git Hooks</td>
+                            <td>Lefthook</td>
+                            <td>-</td>
+                            <td>Linting, pre-commit checks</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="impact" class="project-section">
+                <h2>Social Impact & UN SDGs</h2>
+                <p>Verdex is designed to deliver transformative impact on Sri Lanka's agricultural landscape, aligning
+                    with multiple UN Sustainable Development Goals.</p>
+
+                <div class="sdg-badges">
+                    <span class="sdg-badge">🎯 SDG 2: Zero Hunger</span>
+                    <span class="sdg-badge">❤️ SDG 3: Good Health</span>
+                    <span class="sdg-badge">💼 SDG 8: Economic Growth</span>
+                    <span class="sdg-badge">💡 SDG 9: Innovation</span>
+                    <span class="sdg-badge">♻️ SDG 12: Responsible Production</span>
+                </div>
+
+                <h3>Expected Outcomes</h3>
+                <ul>
+                    <li>Reduce average crop losses by <strong>5-10%</strong> within first two years of adoption</li>
+                    <li>Save millions of dollars by minimizing import dependency</li>
+                    <li>Reduce QA manual effort by <strong>≥90%</strong></li>
+                    <li>Enable <strong>100% call coverage</strong> for disease detection</li>
+                    <li>Reduce harmful agrochemical usage through targeted application</li>
+                </ul>
+
+                <h3>Target Stakeholders</h3>
+                <div class="component-grid">
+                    <div class="component-card orange">
+                        <h4>Smallholder Farmers</h4>
+                        <p>Primary users - instant disease diagnosis and treatment advice</p>
+                    </div>
+                    <div class="component-card orange">
+                        <h4>Agri Officers</h4>
+                        <p>Support fieldwork with standardized, up-to-date advice</p>
+                    </div>
+                    <div class="component-card orange">
+                        <h4>Government Bodies</h4>
+                        <p>Data on disease outbreaks for policy-making and support programs</p>
+                    </div>
+                    <div class="component-card orange">
+                        <h4>Agrochemical Companies</h4>
+                        <p>Targeted marketing based on disease patterns and regional demand</p>
+                    </div>
+                </div>
+
+                <h3>Future Vision</h3>
+                <ul>
+                    <li>Expansion to other crops beyond rice</li>
+                    <li>IoT integration for real-time field monitoring</li>
+                    <li>Offline TensorFlow Lite model for areas without connectivity</li>
+                    <li>Deeper integration with government agricultural datasets</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 Molindu Achintha. Verdex - AI-Powered Crop Disease Identifier Project.</p>
+    </footer>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
