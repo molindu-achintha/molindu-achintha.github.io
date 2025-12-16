@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Diabetic Retinopathy Detection Using Fundus Images - Ensemble Deep Learning">
+    <title>Diabetic Retinopathy Detection | Molindu Achintha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .project-main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 6rem 2rem 3rem;
+        }
+
+        .project-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .callout {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+            border: 1px solid #ef4444;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .callout h4 {
+            color: #ef4444;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .callout p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .callout.blue {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            border-color: #38bdf8;
+        }
+
+        .callout.blue h4 {
+            color: #38bdf8;
+        }
+
+        .callout.green {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(132, 204, 22, 0.1) 100%);
+            border-color: #22c55e;
+        }
+
+        .callout.green h4 {
+            color: #22c55e;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #ef4444;
+            display: inline-block;
+        }
+
+        .project-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f97316;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ef4444;
+        }
+
+        .stat-card .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .class-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .class-card .grade {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .class-card .name {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .grade-0 .grade {
+            color: #22c55e;
+        }
+
+        .grade-1 .grade {
+            color: #84cc16;
+        }
+
+        .grade-2 .grade {
+            color: #eab308;
+        }
+
+        .grade-3 .grade {
+            color: #f97316;
+        }
+
+        .grade-4 .grade {
+            color: #ef4444;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .info-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ef4444;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card p {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .component-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid #ef4444;
+            border-radius: var(--radius-md);
+            padding: 1rem;
+        }
+
+        .component-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .component-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+
+        .tech-table th,
+        .tech-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .tech-table th {
+            background: var(--bg-tertiary);
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .tech-table td {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+
+            .stats-grid,
+            .class-grid,
+            .two-column,
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="global-nav"
+        style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(148, 163, 184, 0.1); z-index: 1000;">
+        <div
+            style="max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;">
+            <a href="/"
+                style="font-size: 1.125rem; font-weight: 700; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Molindu
+                Achintha</a>
+            <ul style="display: flex; gap: 0.5rem; list-style: none; margin: 0;">
+                <li><a href="/" style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem;">Home</a></li>
+                <li><a href="/projects.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem;">Projects</a></li>
+                <li><a href="/experience.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem;">Experience</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="project-main">
+        <div class="breadcrumb"><a href="/">Home</a> / <a href="/projects.html">Projects</a> / Diabetic Retinopathy
+        </div>
+
+        <div class="project-hero">
+            <h1>Diabetic Retinopathy Detection</h1>
+            <p class="subtitle">An ensemble deep learning classifier combining InceptionNet and ResNet for multi-class
+                diabetic retinopathy detection from fundus images, with SMOTE for class imbalance handling.</p>
+        </div>
+
+        <div class="callout">
+            <h4>Project Overview</h4>
+            <p>This project develops an <strong>ensemble classifier</strong> combining <strong>InceptionNet</strong> and
+                <strong>ResNet</strong> outputs to detect and grade diabetic retinopathy from retinal fundus
+                photographs. Uses <strong>SMOTE</strong> to address class imbalance and comprehensive data augmentation
+                for better generalization.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="number">5</div>
+                <div class="label">DR Grades</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">2</div>
+                <div class="label">Base Models</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">SMOTE</div>
+                <div class="label">Balancing</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">Ensemble</div>
+                <div class="label">Strategy</div>
+            </div>
+        </div>
+
+        <section class="project-section">
+            <h2>Problem Statement</h2>
+            <p>Diabetic Retinopathy (DR) is a leading cause of blindness. Early detection through screening can prevent
+                up to <strong>95% of vision loss</strong>. Over 400 million people worldwide have diabetes, and ~1 in 3
+                will develop DR.</p>
+            <div class="two-column">
+                <div class="info-card">
+                    <h4>📉 The Challenge</h4>
+                    <p>Manual grading by ophthalmologists is time-consuming and subject to inter-observer variability.
+                        Cannot scale to meet global demand.</p>
+                </div>
+                <div class="info-card">
+                    <h4>🎯 Our Solution</h4>
+                    <p>Automated DR grading using deep learning ensemble combining multiple CNN architectures for
+                        robust, accurate classification.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <h2>DR Severity Grades</h2>
+            <p>Classification follows the International Clinical DR Severity Scale:</p>
+            <div class="class-grid">
+                <div class="class-card grade-0">
+                    <div class="grade">0</div>
+                    <div class="name">No DR</div>
+                </div>
+                <div class="class-card grade-1">
+                    <div class="grade">1</div>
+                    <div class="name">Mild</div>
+                </div>
+                <div class="class-card grade-2">
+                    <div class="grade">2</div>
+                    <div class="name">Moderate</div>
+                </div>
+                <div class="class-card grade-3">
+                    <div class="grade">3</div>
+                    <div class="name">Severe</div>
+                </div>
+                <div class="class-card grade-4">
+                    <div class="grade">4</div>
+                    <div class="name">Proliferative</div>
+                </div>
+            </div>
+            <div class="callout blue">
+                <h4>Class Imbalance</h4>
+                <p>Most patients are healthy (Grade 0), while severe cases (Grades 3-4) are rare but critical. SMOTE
+                    generates synthetic minority samples to balance training.</p>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <h2>Model Architecture</h2>
+            <div class="two-column">
+                <div class="info-card">
+                    <h4>InceptionNet V3</h4>
+                    <p><strong>Innovation:</strong> Inception modules with parallel convolutions (1x1, 3x3,
+                        5x5)<br><strong>Strength:</strong> Multi-scale feature extraction<br><strong>Params:</strong>
+                        ~23M</p>
+                </div>
+                <div class="info-card">
+                    <h4>ResNet50</h4>
+                    <p><strong>Innovation:</strong> Skip connections for deep networks (50
+                        layers)<br><strong>Strength:</strong> Reduced vanishing gradients<br><strong>Params:</strong>
+                        ~25M</p>
+                </div>
+            </div>
+            <h3>Ensemble Strategy</h3>
+            <p>Both models run parallel inference, output softmax probabilities are averaged, and argmax gives final
+                prediction. Diversity between architectures improves robustness.</p>
+        </section>
+
+        <section class="project-section">
+            <h2>Data Augmentation</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🔄 Rotation</h4>
+                    <p>Random ±30° rotation</p>
+                </div>
+                <div class="component-card">
+                    <h4>↔️ Flipping</h4>
+                    <p>Horizontal & vertical flips</p>
+                </div>
+                <div class="component-card">
+                    <h4>☀️ Brightness</h4>
+                    <p>Random ±20% adjustment</p>
+                </div>
+                <div class="component-card">
+                    <h4>🎨 Contrast</h4>
+                    <p>CLAHE enhancement</p>
+                </div>
+                <div class="component-card">
+                    <h4>🔍 Zoom</h4>
+                    <p>0.9-1.1× random zoom</p>
+                </div>
+                <div class="component-card">
+                    <h4>✂️ Cropping</h4>
+                    <p>Circle crop to retinal area</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <h2>SMOTE Balancing</h2>
+            <div class="callout green">
+                <h4>Synthetic Minority Oversampling</h4>
+                <p>For each minority class sample, SMOTE finds k-nearest neighbors in feature space, creates synthetic
+                    samples by interpolation. Minority classes (Grades 3, 4) upsampled to match Grade 0 count.</p>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <h2>Technology Stack</h2>
+            <table class="tech-table">
+                <tr>
+                    <th>Category</th>
+                    <th>Technology</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>Deep Learning</td>
+                    <td>TensorFlow, Keras</td>
+                    <td>Model training & inference</td>
+                </tr>
+                <tr>
+                    <td>Pre-trained</td>
+                    <td>InceptionNet V3, ResNet50</td>
+                    <td>Transfer learning</td>
+                </tr>
+                <tr>
+                    <td>Data</td>
+                    <td>NumPy, Pandas</td>
+                    <td>Data manipulation</td>
+                </tr>
+                <tr>
+                    <td>Image</td>
+                    <td>OpenCV, PIL</td>
+                    <td>Preprocessing</td>
+                </tr>
+                <tr>
+                    <td>Balancing</td>
+                    <td>imbalanced-learn</td>
+                    <td>SMOTE implementation</td>
+                </tr>
+                <tr>
+                    <td>Metrics</td>
+                    <td>Scikit-learn</td>
+                    <td>Evaluation metrics</td>
+                </tr>
+            </table>
+            <div class="callout">
+                <h4>GitHub Repository</h4>
+                <p><a href="https://github.com/sandaruwanWGMA/Diabetic-retinopathy-detection-using-fundus-images-V3"
+                        target="_blank"
+                        style="color: #ef4444;">github.com/sandaruwanWGMA/Diabetic-retinopathy-detection-using-fundus-images-V3</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 Molindu Achintha. Diabetic Retinopathy Detection Project.</p>
+    </footer>
+</body>
+
+</html>

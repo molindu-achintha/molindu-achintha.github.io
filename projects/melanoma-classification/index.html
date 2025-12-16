@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SIIM-ISIC Melanoma Classification Using Transfer Learning with EfficientNet B7">
+    <title>Melanoma Classification | Molindu Achintha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .project-main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 6rem 2rem 3rem;
+        }
+
+        .project-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .callout {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border: 1px solid #a855f7;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .callout h4 {
+            color: #a855f7;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .callout p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .callout.blue {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            border-color: #38bdf8;
+        }
+
+        .callout.blue h4 {
+            color: #38bdf8;
+        }
+
+        .callout.green {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(132, 204, 22, 0.1) 100%);
+            border-color: #22c55e;
+        }
+
+        .callout.green h4 {
+            color: #22c55e;
+        }
+
+        .project-section {
+            margin-bottom: 3rem;
+        }
+
+        .project-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #a855f7;
+            display: inline-block;
+        }
+
+        .project-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ec4899;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-section ul li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #a855f7;
+        }
+
+        .stat-card .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .info-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #a855f7;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card p {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pipeline-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .pipeline-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid #a855f7;
+            border-radius: var(--radius-md);
+            padding: 1rem;
+        }
+
+        .pipeline-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pipeline-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+
+        .tech-table th,
+        .tech-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .tech-table th {
+            background: var(--bg-tertiary);
+            color: #a855f7;
+            font-weight: 600;
+        }
+
+        .tech-table td {
+            color: var(--text-secondary);
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .flow-step {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .flow-step .num {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+
+            .stats-grid,
+            .two-column,
+            .pipeline-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="global-nav"
+        style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(148, 163, 184, 0.1); z-index: 1000;">
+        <div
+            style="max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;">
+            <a href="/"
+                style="font-size: 1.125rem; font-weight: 700; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Molindu
+                Achintha</a>
+            <ul style="display: flex; gap: 0.5rem; list-style: none; margin: 0;">
+                <li><a href="/" style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem;">Home</a></li>
+                <li><a href="/projects.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem;">Projects</a></li>
+                <li><a href="/experience.html"
+                        style="padding: 0.5rem 1rem; color: #94a3b8; font-size: 0.875rem;">Experience</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="project-main">
+        <div class="breadcrumb"><a href="/">Home</a> / <a href="/projects.html">Projects</a> / Melanoma Classification
+        </div>
+
+        <div class="project-hero">
+            <h1>SIIM-ISIC Melanoma Classification</h1>
+            <p class="subtitle">Transfer learning with modified EfficientNet B7 architecture for melanoma detection from
+                dermoscopic images, featuring comprehensive DICOM preprocessing pipeline with CLAHE enhancement.</p>
+        </div>
+
+        <div class="callout">
+            <h4>Project Overview</h4>
+            <p>This project implements a <strong>modified EfficientNet B7</strong> architecture with custom
+                classification head for binary melanoma detection from dermoscopic skin lesion images. The solution was
+                developed for the <strong>SIIM-ISIC Melanoma Classification</strong> Kaggle competition, focusing on
+                early detection of the deadliest form of skin cancer.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="number">B7</div>
+                <div class="label">EfficientNet</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">DICOM</div>
+                <div class="label">Image Format</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">CLAHE</div>
+                <div class="label">Enhancement</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">Transfer</div>
+                <div class="label">Learning</div>
+            </div>
+        </div>
+
+        <section class="project-section">
+            <h2>Problem Statement</h2>
+            <p>Melanoma is the deadliest form of skin cancer, responsible for <strong>75% of skin cancer
+                    deaths</strong>. Early detection dramatically improves survival rates - 5-year survival exceeds 99%
+                when caught early, but drops below 25% for late-stage diagnosis.</p>
+            <div class="two-column">
+                <div class="info-card">
+                    <h4>🔬 The Challenge</h4>
+                    <p>Distinguishing melanoma from benign lesions requires expert dermatologists. Visual inspection
+                        alone misses ~25% of melanomas, and there's significant inter-observer variability.</p>
+                </div>
+                <div class="info-card">
+                    <h4>🎯 Our Solution</h4>
+                    <p>Deep learning classifier trained on 33,000+ dermoscopic images to identify malignant melanoma
+                        with high sensitivity, reducing missed diagnoses.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <h2>Dataset: SIIM-ISIC</h2>
+            <p>The SIIM-ISIC Melanoma Classification dataset from Kaggle contains dermoscopic images in DICOM format
+                with associated patient metadata.</p>
+            <div class="callout blue">
+                <h4>Dataset Statistics</h4>
+                <p><strong>33,126</strong> training images • <strong>10,982</strong> test images • <strong>Binary
+                        classification</strong> (benign vs malignant) • Includes patient age, sex, anatomical site
+                    metadata • Severe class imbalance (~2% positive rate)</p>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <h2>DICOM Preprocessing Pipeline</h2>
+            <p>Medical DICOM images require specialized preprocessing before feeding to neural networks.</p>
+            <div class="pipeline-grid">
+                <div class="pipeline-card">
+                    <h4>1. DICOM Loading</h4>
+                    <p>Parse DICOM files using Pydicom library, extract pixel arrays and metadata</p>
+                </div>
+                <div class="pipeline-card">
+                    <h4>2. Grayscale Conversion</h4>
+                    <p>Convert RGB dermoscopic images to grayscale for single-channel processing</p>
+                </div>
+                <div class="pipeline-card">
+                    <h4>3. Gaussian Denoising</h4>
+                    <p>Apply Gaussian blur to reduce image noise while preserving lesion boundaries</p>
+                </div>
+                <div class="pipeline-card">
+                    <h4>4. CLAHE Enhancement</h4>
+                    <p>Contrast Limited Adaptive Histogram Equalization to enhance lesion visibility</p>
+                </div>
+                <div class="pipeline-card">
+                    <h4>5. Lesion Segmentation</h4>
+                    <p>Segment skin lesion from background using thresholding and morphological operations</p>
+                </div>
+                <div class="pipeline-card">
+                    <h4>6. Resize & Normalize</h4>
+                    <p>Resize to 224×224, normalize using ImageNet mean/std for transfer learning</p>
+                </div>
+            </div>
+            <h3>CLAHE Details</h3>
+            <p>CLAHE (Contrast Limited Adaptive Histogram Equalization) divides the image into small tiles, applies
+                histogram equalization to each tile with contrast limiting, then stitches them using bilinear
+                interpolation. This enhances local contrast without amplifying noise.</p>
+        </section>
+
+        <section class="project-section">
+            <h2>Model Architecture</h2>
+            <h3>EfficientNet B7 Base</h3>
+            <p>EfficientNet uses compound scaling to balance network depth, width, and resolution. B7 is the largest
+                variant with:</p>
+            <ul>
+                <li><strong>66M parameters</strong> - larger capacity for complex patterns</li>
+                <li><strong>600×600 input resolution</strong> (we use 224×224 for efficiency)</li>
+                <li><strong>MBConv blocks</strong> with squeeze-and-excitation attention</li>
+                <li><strong>Swish activation</strong> for smoother gradients</li>
+            </ul>
+            <h3>Custom Classification Head</h3>
+            <div class="flow-steps">
+                <div class="flow-step"><span class="num">1</span> Global Average Pooling</div>
+                <div class="flow-step"><span class="num">2</span> Dropout (0.5)</div>
+                <div class="flow-step"><span class="num">3</span> Dense 256 + ReLU</div>
+                <div class="flow-step"><span class="num">4</span> Dropout (0.3)</div>
+                <div class="flow-step"><span class="num">5</span> Dense 1 + Sigmoid</div>
+            </div>
+            <h3>Transfer Learning Strategy</h3>
+            <ul>
+                <li><strong>ImageNet weights:</strong> Start with pre-trained EfficientNet B7</li>
+                <li><strong>Freeze early layers:</strong> Keep low-level feature extractors frozen</li>
+                <li><strong>Fine-tune later layers:</strong> Train last 50 layers with lower learning rate</li>
+                <li><strong>Custom head:</strong> Train classification head from scratch</li>
+            </ul>
+        </section>
+
+        <section class="project-section">
+            <h2>Training Configuration</h2>
+            <table class="tech-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                    <th>Rationale</th>
+                </tr>
+                <tr>
+                    <td>Optimizer</td>
+                    <td>Adam</td>
+                    <td>Adaptive learning rate</td>
+                </tr>
+                <tr>
+                    <td>Learning Rate</td>
+                    <td>1e-4 (head), 1e-5 (backbone)</td>
+                    <td>Differential LR for fine-tuning</td>
+                </tr>
+                <tr>
+                    <td>Loss Function</td>
+                    <td>Binary Cross-Entropy</td>
+                    <td>Binary classification</td>
+                </tr>
+                <tr>
+                    <td>Batch Size</td>
+                    <td>16</td>
+                    <td>Memory constraints with B7</td>
+                </tr>
+                <tr>
+                    <td>Epochs</td>
+                    <td>30</td>
+                    <td>With early stopping</td>
+                </tr>
+                <tr>
+                    <td>Class Weights</td>
+                    <td>Inverse frequency</td>
+                    <td>Handle class imbalance</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="project-section">
+            <h2>Technology Stack</h2>
+            <table class="tech-table">
+                <tr>
+                    <th>Category</th>
+                    <th>Technology</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>Deep Learning</td>
+                    <td>TensorFlow, Keras</td>
+                    <td>Model training & inference</td>
+                </tr>
+                <tr>
+                    <td>Pre-trained</td>
+                    <td>EfficientNet B7</td>
+                    <td>Transfer learning backbone</td>
+                </tr>
+                <tr>
+                    <td>DICOM</td>
+                    <td>Pydicom</td>
+                    <td>Medical image loading</td>
+                </tr>
+                <tr>
+                    <td>Image Processing</td>
+                    <td>OpenCV, Scikit-image</td>
+                    <td>CLAHE, segmentation</td>
+                </tr>
+                <tr>
+                    <td>Data</td>
+                    <td>NumPy, Pandas</td>
+                    <td>Data manipulation</td>
+                </tr>
+                <tr>
+                    <td>Metrics</td>
+                    <td>Scikit-learn</td>
+                    <td>AUC-ROC, evaluation</td>
+                </tr>
+            </table>
+            <div class="callout">
+                <h4>GitHub Repository</h4>
+                <p><a href="https://github.com/sandaruwanWGMA/SIIM-ISIC-Melanoma-Classification-Using-Transfer-Learning"
+                        target="_blank"
+                        style="color: #a855f7;">github.com/sandaruwanWGMA/SIIM-ISIC-Melanoma-Classification-Using-Transfer-Learning</a>
+                </p>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <h2>Clinical Impact</h2>
+            <div class="callout green">
+                <h4>Early Detection Saves Lives</h4>
+                <p>Automated melanoma screening can serve as a <strong>second opinion</strong> for dermatologists,
+                    flagging suspicious lesions for closer examination. This can help catch melanomas that might
+                    otherwise be missed, potentially saving lives through earlier intervention.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 Molindu Achintha. SIIM-ISIC Melanoma Classification Project.</p>
+    </footer>
+</body>
+
+</html>

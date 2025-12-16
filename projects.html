@@ -155,47 +155,43 @@
                 </div>
             </a>
 
-            <!-- Diabetic Retinopathy -->
-            <div class="project-card">
+            <a href="/projects/diabetic-retinopathy/" class="project-card">
                 <h3>Diabetic Retinopathy Detection Using Fundus Images</h3>
-                <p>Trained a classifier using combined outputs from InceptionNet and ResNet models. Applied SMOTE for
-                    class imbalance and multiple data augmentation techniques to improve model performance on medical
-                    imaging classification.</p>
+                <p>Ensemble deep learning classifier combining InceptionNet and ResNet for multi-class DR detection.
+                    Applied SMOTE for class imbalance and comprehensive data augmentation for medical imaging.</p>
                 <ul class="project-features">
-                    <li>Fundus image classification</li>
-                    <li>Ensemble of InceptionNet and ResNet</li>
-                    <li>Class imbalance handling with SMOTE</li>
-                    <li>Comprehensive data augmentation</li>
+                    <li>5-class DR severity grading</li>
+                    <li>Ensemble of InceptionNet V3 + ResNet50</li>
+                    <li>SMOTE for class imbalance handling</li>
+                    <li>Transfer learning from ImageNet</li>
                 </ul>
                 <div class="project-tags">
-                    <span>Python</span>
-                    <span>TensorFlow</span>
-                    <span>Keras</span>
-                    <span>SMOTE</span>
-                    <span>Data Augmentation</span>
-                </div>
-            </div>
-
-            <!-- Melanoma -->
-            <div class="project-card">
-                <h3>SIIM-ISIC Melanoma Classification Using Transfer Learning</h3>
-                <p>Implemented a modified InceptionNet B7 architecture for melanoma classification. Applied
-                    preprocessing including DICOM to grayscale conversion, denoising, contrast enhancement, and
-                    segmentation for dermoscopic image analysis.</p>
-                <ul class="project-features">
-                    <li>Melanoma classification from dermoscopic images</li>
-                    <li>DICOM preprocessing pipeline</li>
-                    <li>Transfer learning with InceptionNet B7</li>
-                    <li>Image enhancement and segmentation</li>
-                </ul>
-                <div class="project-tags">
-                    <span>Python</span>
                     <span>TensorFlow</span>
                     <span>Keras</span>
                     <span>InceptionNet</span>
-                    <span>Image Preprocessing</span>
+                    <span>ResNet</span>
+                    <span>SMOTE</span>
                 </div>
-            </div>
+            </a>
+
+            <a href="/projects/melanoma-classification/" class="project-card">
+                <h3>SIIM-ISIC Melanoma Classification</h3>
+                <p>Transfer learning with modified EfficientNet B7 for melanoma detection from dermoscopic images.
+                    Features DICOM preprocessing with CLAHE enhancement and lesion segmentation.</p>
+                <ul class="project-features">
+                    <li>Binary melanoma classification</li>
+                    <li>EfficientNet B7 with custom head</li>
+                    <li>DICOM preprocessing + CLAHE</li>
+                    <li>Transfer learning from ImageNet</li>
+                </ul>
+                <div class="project-tags">
+                    <span>TensorFlow</span>
+                    <span>EfficientNet B7</span>
+                    <span>Pydicom</span>
+                    <span>OpenCV</span>
+                    <span>CLAHE</span>
+                </div>
+            </a>
 
             <!-- Sinhala Idioms -->
             <a href="/projects/sinhala-idioms/" class="project-card">
